@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic}">
+<link href="css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
+<script th:src="@{/js/scripts.js}" src="../../static/js/scripts.js"></script>
+
+    <div layout:fragment="content" class="m-3 p-3">
+
+        <!-- register -->
+        <div class="row mt-3">
+
+            <div class="col">
+
+                <div class="card">
+                    <h5 class="card-header">메인페이지</h5>
+                    <div class="card-body">
+
+                        <!-- board register content -->
+
+
+
+                    </div>
+                </div>
+
+            </div>            
+
+        </div>
+
+        <!-- 모달창 -->
+        <div></div>
+
+    </div>
+
+
+
+
+    <script layout:fragment="script"    th:inline="javascript">
+        const auth = [[${#authentication}]]
+        console.log(auth)
+
+    </script>
+    <style  layout:fragment="css"       th:inline="css">
+        .reset {
+            margin-left: 0.2em;
+        }
+    </style>
+</html>
