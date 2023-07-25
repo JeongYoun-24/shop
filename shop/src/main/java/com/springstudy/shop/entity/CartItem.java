@@ -18,12 +18,12 @@ public class CartItem {
 
     // 연관 관계 맵핑할 경우 : 함조하는 fk키를 기준으로 설정
     // 하나의 장바구니는 여러개의 삼품을 담을수 있는 관계
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
     // 하나의 상품은 여러 장바구니에 상품을 담을수 있는 관계
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
     private int count;

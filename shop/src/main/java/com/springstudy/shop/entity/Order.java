@@ -30,9 +30,9 @@ public class Order extends BasicEntity { // 주문 테이블
     // 하나의 주문이 여러개의 주문 상품을 갖는 list 자료형으로 맵핑
     // order엔티티가 주인(주체)이 아니므로 "mappedBy" 속성으로 연관 관계의 주인을 설정
     // orderItems에 잇는 Order에 의해 관리
-    @OneToMany(mappedBy = "order",
-
-            cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order",fetch = FetchType.LAZY,
+            orphanRemoval = true, // 고아객체 제거
+            cascade = CascadeType.ALL)// 고객이 주문할 상품을 선택하고  주문할때 주문 엔티티를 저장하면서 주문 상품
     private List<OrderItem> orderItems  =new ArrayList<>(); // 주문 정보
 
 //    private LocalDateTime regTime;
@@ -45,6 +45,14 @@ public class Order extends BasicEntity { // 주문 테이블
        -부모엔티티 저장되면 , 자식 엔티티 자동 저장
        -고객이 주문할 상품을 선택하고 주문 할때 주문 엔티티를 저장하면서
        -주문 상품 엔티티도 함께 저장되는 경우
+
+        고아 객체 제거
+ 부모 엔티티와 연관관계가 끊어진 자식 엔티티를 고아객체 \
+ 부모 엔티티를 통해서 자식의 생명주기를 관리
+ 주의사항 : 고아객체제거 기능은 참조하는 곳이 하나일때만 사용
+ 주로 @OenToOen , @OenTomany 어노테이션에 적용
+
+
 
 -- CASCADE 종류
 -- PERSIST, MERGE , REMOVE,REFRESH,DETACH , ALL

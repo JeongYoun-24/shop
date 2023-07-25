@@ -15,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = "role" )
-public class Member {
+public class Member extends BaseEntity { // 등록자 , 수정자 , 등록일, 수정일
     @Id
     @Column(name="member_id")
     @GeneratedValue(strategy= GenerationType.AUTO)// autoincrement

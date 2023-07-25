@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-@EnableJpaAuditing
+//@EnableJpaAuditing // Audityconfig클래스에서 EndleJapAyditing어노테이션 선언시 메인에서 생략
 public class ShopApplication {
 
 	public static void main(String[] args) {
