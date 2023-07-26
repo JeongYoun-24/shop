@@ -16,7 +16,7 @@
                     <div class="card-body">
 
                         <!-- board register content -->
-                        <form action="/members/register" method="get" th:object="${memberDTO}">
+                        <form action="/members/register" method="post" th:object="${memberDTO}">
                             <div class="input-group mb-3">
                                 <label for="title" class="input-group-text">Name</label>
                                 <input type="text" name="name" class="form-control" id="title" placeholder="이름을 입력해주세요"
