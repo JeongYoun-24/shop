@@ -1,0 +1,38 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1 >타임리프 테스트 02 </h1>
+    <hr>
+    <h1>상품 데이터 출력 테스트 </h1>
+    <hr>
+    <div >상품명 :  <span th:text="${itemDTO.itemNm}"></span></div>
+    <div >상품상세 설명 :  <span th:text="${itemDTO.itemDetail}"></span></div>
+    <div >상품 가격 :  <span th:text="${itemDTO.price}"></span></div>
+    <div >상품 등록일 :  <span th:text="${itemDTO.regTime}"></span></div>
+
+    <hr>
+    <div th:object="${itemDTO}">
+
+        <div >상품명 :  <span th:text="*{itemNm}"></span></div>
+        <div >상품상세 설명 :  <span th:text="*{itemDetail}"></span></div>
+        <div >상품 가격 :  <span th:text="*{price}"></span></div>
+        <span th:text="${#calendars.format(regTime,'dd MMMM yyyy')}">13 May 2011</span>
+        <div >상품 등록일 :  <span th:text="*{regTime}"></span></div>
+
+    </div>
+    <hr>
+    <h2>[[${itemDTO}]] </h2>
+
+
+
+
+
+</body>
+</html>

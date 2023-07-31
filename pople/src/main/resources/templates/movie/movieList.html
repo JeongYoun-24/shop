@@ -1,0 +1,101 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/layout}">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>영화 리스트 </title>
+</head>
+<body>
+
+<main>
+
+	<div layout:fragment="content" class="m-2 p-2 ">
+
+		<div class="container">
+			<div class="row row-cols-1 row-cols-md-4 g-3">
+				<div class="col ">
+					<div class="card h-50">
+						<img src="https://www.theforment.com/web/product/big/202305/9a89fd2ce12405b9cc15c43e965fa378.jpg" class="card-img-top" alt="">
+						<div class="card-body">
+							<h6 class="card-title">범죄도시</h6>
+							<p class="card-text">
+								나무잎ㅣ바이올렛ㅣ샌달우드<hr>
+							49,000원
+							</p>
+							<div class="d-grid gap-2">
+								<a href="${ctxPath}/product/revList.do" class=" btn btn-outline-secondary btn-lg">Add To Cart</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="col ">
+					<div class="card h-50">
+						<img src="https://www.theforment.com/web/product/big/202305/23237843ddf9097aa0977498efa7603d.jpg" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h6 class="card-title">포맨트 내추럴 시그니처 퍼퓸 피그 누아</h6>
+							<p class="card-text">
+								레몬제스트ㅣ달큰한 무화과ㅣ시더우드<hr>
+							49,000원
+							</p>
+							<div class="d-grid gap-2">
+								<a href="#" class=" btn btn-outline-secondary btn-lg">Add To Cart</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col ">
+					<div class="card h-50">
+						<img src="https://www.theforment.com/web/product/big/202305/9109aa9f26b35b081cfe1ddd96864b46.jpg" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h6 class="card-title">포맨트 내추럴 시그니처 퍼퓸 바질 테라스</h6>
+							<p class="card-text">
+								싱그러운 유자ㅣ바질ㅣ머스크<hr>
+							49,000원
+							</p>
+							<div class="d-grid gap-2">
+								<a href="#" class=" btn btn-outline-secondary btn-lg">Add To Cart</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col ">
+					<div class="card h-50">
+						<img src="https://www.theforment.com/web/product/big/202305/1ef07b606877c3bb16a96893cd974210.jpg" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h6 class="card-title">포맨트 내추럴 퍼퓸 샤워 바질 테라스</h6>
+							<p class="card-text">
+								싱그러운 유자ㅣ바질ㅣ머스크<hr>
+							24,000원
+							</p>
+							<div class="d-grid gap-2">
+								<a href="#" class=" btn btn-outline-secondary btn-lg">Add To Cart</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
+
+</main>
+
+
+
+
+
+
+
+</body>
+</html>

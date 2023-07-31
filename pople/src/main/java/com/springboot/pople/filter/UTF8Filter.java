@@ -1,0 +1,28 @@
+package com.springboot.pople.filter;
+
+import lombok.extern.log4j.Log4j2;
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+
+@WebFilter("/")
+@Log4j2
+public class UTF8Filter implements Filter {
+
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
+
+
+            log.info("UTF* filter...");
+
+            HttpServletRequest req = (HttpServletRequest) request;
+            req.setCharacterEncoding("utf-8");
+            chain.doFilter(request, response);
+
+
+    }
+}

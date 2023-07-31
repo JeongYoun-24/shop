@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<title>회원수정 페이지</title>
+
+<!--container  border border-1-->
+<main>
+  <div layout:fragment="content" class="m-2 p-2 ">
+    <!-- 해당 페이지 콘텐츠 영역 작성 -->
+    <div>
+      <form action="/users/modify" method="post">
+        <div>
+          <input type="text"  name="user_id" placeholder="아이디" disabled>
+
+        </div>
+        <div>
+          <input type="text" name="user_pwd" placeholder="비밀번호">
+
+
+        </div>
+        <div>
+          <input type="text" name="user_name" placeholder="이름">
+
+
+        </div>
+        <div>
+          <input type="text" name="user_email" placeholder="이메일">
+
+
+        </div>
+        <div>
+          <input type="text" name="phone" placeholder="번호">
+
+
+        </div>
+        <div>
+          <input type="text" name="birthdate" placeholder="생년월일" disabled>
+
+        </div>
+        <button class="" id="modifyBtn">가입완료</button>
+      </form>
+
+    </div>
+
+
+
+
+
+    <!--모댈창 -->
+  </div>
+
+</main>
+
+
+
+
+
+
+
+
+<script  layout:fragment="script" th:inline="javascript">
+$(function(){
+	 const errors = [[${errors}]]
+        console.log(errors)
+
+         let errorMsg = ''
+
+        if(errors){
+            for(let i = 0; i < errors.length; i++){
+                errorMsg += `${errors[i].field}은(는) ${errors[i].defaultMessage} \n`
+            }
+        }
+        history.replaceState({},null,null)
+<!--        alert(errorMsg)-->
+
+
+
+	$('#modifyBtn').click(function(e){
+<!--	 e.preventDefault();-->
+	console.log("클릭")
+
+	})
+
+})
+
+
+
+
+
+</script>
+<style  layout:fragment="css" th:inline="css">
+
+</style>
+</html>
