@@ -51,6 +51,22 @@ public class MovieController {
         return "movie/movieFind";
     }
 
+    @GetMapping(value = "/find/{id}")
+    public String getMovieFind(@PathVariable("id") Long id, Model model){
+    log.info("영화 상세 정보 요청 ㄱㄱ~~");
+    Long movieid = id;
+    log.info(movieid);
+
+      MovieFormDTO movieFormDTO =  movieService2.getMovieDtl(movieid);
+      log.info(movieFormDTO.getMovieImgDTOList());
+
+
+        model.addAttribute("movie",movieFormDTO);
+
+
+        return "movie/movieFind";
+    }
+
 
 
 
@@ -79,7 +95,6 @@ public class MovieController {
                 .moveiRating(req.getParameter("movieRating"))
                 .movieTime(req.getParameter("movieTime"))
                 .movieDate(req.getParameter("movieDate"))
-                .movieStatus(false)
                 .build();
         System.out.println(movieDTO);
 
@@ -134,11 +149,7 @@ public class MovieController {
         }
 
         try {
-            log.info("432432432432432432423432432432432432432432432"+movieImgFileList);
-            log.info("432432432432432432423432432432432432432432432"+movieFormDTO.getMovieName());
-
-
-
+            // 전달 받은 데이터 서비스로 보내서 db 로 저장
             movieService2.saveMovie(movieFormDTO, movieImgFileList);
         }catch (Exception e){
             model.addAttribute("errorMessage","영회 등록 중 에러가 발생하였습니다.");

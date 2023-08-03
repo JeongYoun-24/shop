@@ -4,6 +4,7 @@ import com.springboot.pople.constant.MovieStatus;
 import com.springboot.pople.entity.Movie;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.NotBlank;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@ToString
 public class MovieFormDTO {
 
     private Long id;
@@ -28,6 +30,7 @@ public class MovieFormDTO {
     private String movieRating; // 영화 관람 등급
     @NotNull(message = "영화개봉일 은 필수 입력 값입니다.")
     private String movieDate;  //   영화 개봉일
+
     private MovieStatus movieStatus;  // 영화 게시 여부
 
     // 상품 저장 후 수정할 때 상품 이미지 정보를 저장하는 리스트

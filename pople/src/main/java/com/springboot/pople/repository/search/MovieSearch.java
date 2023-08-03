@@ -11,4 +11,5 @@ public interface MovieSearch {
     Page<Movie> searchAll(String[] types, String keyword, Pageable pageable);
     Page<MovieListCountDTO> searchWithReplyCount(String[] types, String keyword, Pageable pageable );
 
+
 }

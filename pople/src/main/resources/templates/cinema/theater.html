@@ -1,0 +1,65 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>상영관 등록</title>
+</head>
+<body>
+
+<main>
+    <div layout:fragment="content" class="m-2 p-2 ">
+        <h3>상영관 등록</h3>
+<!--        [[${cinema}]]-->
+
+
+        <div >
+            <select id="" class="" name="type" >
+                <option name="cinemaId" id="cinema"  value="${cinema.cinemaid}" th:each="cinema, status: ${cinema}">[[${cinema.cinemaAddrss}]]_번호 : [[${cinema.cinemaid}]]</option>
+
+            </select>
+
+        </div>
+
+
+
+        <form action="/theater/form" method="post" class="d-flex ">
+        <div>
+            <div><input type="text" name="theaterName" id="theaterName" class="" placeholder="상영관 이름">  </div>
+            <div><input type="text" name="theaterid" id="theaterid" class="" placeholder="상영관 번호">  </div>
+            <div><input type="number" name="cinemaid" id="cinemaid" class="" placeholder="영화관 번호">  </div>
+<!--            <div><input type="text" name="xAxis" id="xAxis" class="" placeholder="x좌표">  </div>-->
+<!--            <div><input type="text" name="yAxis" id="yAxis" class="" placeholder="y좌표">  </div>-->
+            <div id="error"></div>
+
+        </div>
+        <button id="cinemaBtn">저장</button>
+        </form>
+    </div>
+
+
+
+</main>
+
+
+
+
+</body>
+<script  layout:fragment="script" th:inline="javascript">
+$(function(){
+
+
+
+
+})
+
+
+</script>
+<style  layout:fragment="css" th:inline="css">
+
+</style>
+</html>

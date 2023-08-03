@@ -1,0 +1,102 @@
+	<!DOCTYPE html>
+	<html xmlns:th="http://www.thymeleaf.org"
+		  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		  layout:decorate="~{layout/layout2}">
+	<title>좌석등록 페이지</title>
+
+	<div layout:fragment="content" class="m-3 p-3">
+<!--		[[${cinema}]]-->
+<!--		<hr>-->
+<!--		[[${theater}]]-->
+		<!-- 리스트 -->
+		<div class="row mt-3">
+			<div class="col">
+
+				<div class="card">
+					<h5 class="card-header">영화좌석 페이지 </h5>
+					<div class="card-body">
+						<div class="d-flex ">
+							<form action="/seat/form" method="post">
+								<input type="number" name="seatNo" id="seatNo" placeholder="좌석번호" min="1" value="1">
+								<input type="number" name="seatGroup" id="seatGroup" placeholder="좌석그룹" min="1" value="1" >
+								<select id="seatLineNo" class="" name="seatLineNo" >
+									<option  value="A">A</option>
+									<option  value="B">B</option>
+									<option  value="C">C</option>
+									<option  value="D">D</option>
+									<option  value="E">E</option>
+								</select>
+								<select id="theaterid" class="" name="theaterid" >
+									<option  th:value="${theater.id}" th:each="theater, status: ${theater}">[[${theater.id}]]</option>
+
+								</select>
+								<select id="cinemaid" class="" name="cinemaid" >
+									<option  th:value="${cinema.cinemaid}" th:each="cinema, status: ${cinema}">[[${cinema.cinemaid}]]</option>
+
+								</select>
+
+
+
+								<button th:formaction="@{/seat/form}" type="submit" id="btn">저장</button>
+
+							</form>
+
+						</div>
+
+
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+	</div>
+
+
+
+
+	<script layout:fragment="script"    th:inline="javascript">
+	$(function(){
+		$('#btn').click(function(e){
+		var seatNo = $('#seatNo').val()
+		var seatGroup = $('#seatGroup').val()
+		var seatLineNo = $('#seatLineNo').val()
+		var theaterid = $('#theaterid').val()
+		var cinemaid = $('#cinemaid').val()
+		console.log(seatNo)
+		console.log(seatGroup)
+		console.log(seatLineNo)
+		console.log(theaterid)
+		console.log(cinemaid)
+
+<!--			e.preventDefault();-->
+
+
+
+
+
+
+
+		})
+	})
+
+
+	</script>
+	<style  layout:fragment="css"       th:inline="css">
+			.clearBtn {
+				margin-left: 0.3em;
+			}
+
+			.pagination a {
+				cursor: pointer;
+			}
+			.btn-outline-dark:hover{
+
+			}
+
+
+		</style>
+	</html>

@@ -10,6 +10,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Entity
+@Builder
+@Table(name="theater", indexes = {@Index(name="idx_theater_cinema_id", columnList = "cinema_id")})
 public class Theater {
 
     @Id
@@ -20,5 +22,7 @@ public class Theater {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
+
+
 
 }

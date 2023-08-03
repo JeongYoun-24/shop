@@ -3,7 +3,7 @@ package com.springboot.movei;
 import com.springboot.pople.PopleApplication;
 import com.springboot.pople.dto.MovieDTO;
 import com.springboot.pople.entity.Movie;
-import com.springboot.pople.repository.MovieRepository;
+import com.springboot.pople.repository.movie.MovieRepository;
 
 import com.springboot.pople.service.movie.MovieService;
 import lombok.extern.log4j.Log4j2;
@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
 
-import javax.persistence.Column;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +41,7 @@ public class MovieTest {
                 .moviePoster("jpg")
                 .movieSummary("이때까지 이런 영화는 없었다 ㅇㅈ?")
                 .movieTime("188분")
-                .moveiRating("15세이상")
+                .movieRating("15세이상")
                 .movieDate("7/30")
 //                .movieStatus(true)
                 .build();
@@ -68,7 +67,7 @@ public class MovieTest {
                 .movieTime("188분")
                 .moveiRating("15세이상")
                 .movieDate("7/30")
-                .movieStatus(true)
+//                .movieStatus(true)
                 .build();
 
         log.info(movie);
@@ -123,6 +122,14 @@ public class MovieTest {
 
     }
 
+    @Test
+    @DisplayName("영화 조회")
+    public void testFind(){
+        Long movieid = 1L;
+     MovieDTO movieDTO =   movieService.readOne(movieid);
+     log.info(movieDTO);
+
+    }
 
 
 

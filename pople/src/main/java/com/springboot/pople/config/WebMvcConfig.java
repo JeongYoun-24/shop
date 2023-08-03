@@ -13,7 +13,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //WebMvcConfigurer.super.addResourceHandlers(registry);
 
-        // 클라이언트 url을 "/images"로 시작하는 경로일 경우
+        // 클라이언트 url을 "/movie"로 시작하는 경로일 경우
         // uploadPath에 설정한 폴더를 기준으로 파일을 업로드 하도록 설젇
         registry.addResourceHandler("/images/**")
                 .addResourceLocations(uploadPath);

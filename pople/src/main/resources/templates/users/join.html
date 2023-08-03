@@ -13,19 +13,19 @@
 <main>
 	<div layout:fragment="content" class="m-2 p-2 ">
 		<!-- 해당 페이지 콘텐츠 영역 작성 -->
-		<div>
+	<!--	<div>
 
 			<form action="/users/join" method="post" th:object="${usersDTO}" >
 				<div class="input-group mt-3  ">
 					<label for="userid" class="input-group-text">아이디</label>
-					<input type="text"  class="form-control" id="userid" placeholder="아이디 입력해주세요"
+					<input type="text"  class="form-control" name="userid" id="userid" placeholder="아이디 입력해주세요"
 						   th:field="*{userid}" >
 				</div>
 				<div th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}" class="fieldError">Incorrect data</div>
 
 				<div class="input-group mt-3">
 					<label for="password" class="input-group-text">비밀번호</label>
-					<input type="password" class="form-control" id="password" placeholder="비밀번호 입력"
+					<input type="password" class="form-control" name="password" id="password" placeholder="비밀번호 입력"
 						   th:field="*{password}">
 				</div>
 				<div th:if="${#fields.hasErrors('password')}" th:errors="*{password} " class="fieldError">Incorrect data</div>
@@ -37,14 +37,14 @@
 				</div>
 				<div class="input-group mt-3">
 					<label for="name" class="input-group-text">이름</label>
-					<input type="text" class="form-control" id="name" placeholder="이름 입력"
+					<input type="text" class="form-control" name="name" id="name" placeholder="이름 입력"
 						   th:field="*{name}">
 				</div>
 				<div th:if="${#fields.hasErrors('name')}" th:errors="*{name} " class="fieldError">Incorrect data</div>
 
 				<div class="input-group mt-3">
 					<label for="email" class="input-group-text">이메일</label>
-					<input type="email" class="form-control" id="email" placeholder="이메일을 입력해주세요"
+					<input type="email" class="form-control" name="email" id="email" placeholder="이메일을 입력해주세요"
 						   th:field="*{email}" >
 				</div>
 				<div th:if="${#fields.hasErrors('email')}" th:errors="*{email} " class="fieldError">Incorrect data</div>
@@ -62,8 +62,8 @@
 						   th:field="*{birthDate}">
 				</div>
 				<div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"class="fieldError">Incorrect data</div>
-				<!--스프링 시큐리티에서는 GET방식을 제외한 POST/PUT/DELETE요청에 CSRF요청-->
-				<!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
+				&lt;!&ndash;스프링 시큐리티에서는 GET방식을 제외한 POST/PUT/DELETE요청에 CSRF요청&ndash;&gt;
+				&lt;!&ndash;<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">&ndash;&gt;
 
 				<div class="my-4">
 					<div class="d-flex justify-content-end">
@@ -74,8 +74,81 @@
 				</div>
 			</form>
 
-		</div>
+		</div>-->
+		<div class="mt-5">
+			<div class="w-50 m-auto d-flex justify-content-center mt-5">
 
+				<div id="H1" class="mt-5"> <!-- 회원 로그인 -->
+
+					<div class="d-flex justify-content-center  border-bottom  border-black">
+						<h3>회원 가입</h3>
+
+					</div>
+					<form action="/users/join" method="post" th:object="${usersDTO}" >
+						<div class="row ">
+							<div class="mt-3">
+								<input type="text"  class="form-control" name="userid" id="userid" placeholder="아이디 입력해주세요"
+									   th:field="*{userid}" >
+							</div>
+							<div th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}" class="fieldError">Incorrect data</div>
+
+							<div class="mt-2">
+								<input type="password" class="form-control" name="password" id="password" placeholder="비밀번호 입력"
+									   th:field="*{password}">
+							</div>
+							<div th:if="${#fields.hasErrors('password')}" th:errors="*{password} " class="fieldError">Incorrect data</div>
+
+							<div class="mt-2">
+								<input type="password" class="form-control" name="password2" id="password2" placeholder="비밀번호 재입력"
+									   th:field="*{password}">
+							</div>
+							<div th:if="${#fields.hasErrors('password')}" th:errors="*{password} " class="fieldError">Incorrect data</div>
+
+							<div class="mt-2">
+								<input type="text" class="form-control" name="name" id="name" placeholder="이름 입력"
+									   th:field="*{name}">
+							</div>
+							<div th:if="${#fields.hasErrors('name')}" th:errors="*{name} " class="fieldError">Incorrect data</div>
+
+							<div class="mt-2">
+								<input type="email" class="form-control" name="email" id="email" placeholder="이메일을 입력해주세요"
+									   th:field="*{email}" >
+							</div>
+							<div th:if="${#fields.hasErrors('email')}" th:errors="*{email} " class="fieldError">Incorrect data</div>
+
+							<div class="mt-2">
+								<input type="text" class="form-control" id="phone" placeholder="전화번호 입력"
+									   th:field="*{phone}">
+							</div>
+							<div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="fieldError">Incorrect data</div>
+
+							<div class="mt-2">
+								<input type="text"  class="form-control" id="birthDate" placeholder="생년월일 입력"
+									   th:field="*{birthDate}">
+							</div>
+							<div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"class="fieldError">Incorrect data</div>
+
+						</div>
+
+						<div>
+							<div class="row mt-2 p-3">
+								<button type="submit" class="mt-3 btn btn-danger" id="btnLogin" style="height: 50px;">회원가입</button>
+								<!--  <button id="fromBtn" class="mt-2 btn btn-outline-danger" style="height: 50px;">회원가입</button> -->
+								<!--							 <input type="hidden" th:name="$_csrf.parameterName}" th:value="${_csrf.token}">&ndash;&gt;-->
+							</div>
+						</div>
+					</form>
+
+
+				</div><!-- 회원 로그인 -->
+
+
+
+
+
+			</div>
+
+		</div>
 
 
 

@@ -2,6 +2,7 @@ package com.springboot.pople.controller;
 
 import com.springboot.pople.dto.UsersDTO;
 import com.springboot.pople.entity.Users;
+import com.springboot.pople.service.LoginService;
 import com.springboot.pople.service.UsersService;
 import com.springboot.pople.service.users.UsersJoinService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class UsersController {
 
     private final UsersJoinService usersJoinService;
     private final PasswordEncoder passwordEncoder;
-
+    private final LoginService loginService;
 
 
     @GetMapping("/login")
@@ -72,9 +73,13 @@ public class UsersController {
         if (bindingResult.hasErrors()){
             return "users/join";
         }
+        log.info(usersDTO);
+
 
         try {
             Users users = Users.createMember(usersDTO, passwordEncoder);
+            log.info(users);
+
             usersJoinService.saveUsers(users);
         }catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());

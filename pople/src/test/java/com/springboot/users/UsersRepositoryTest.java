@@ -44,10 +44,10 @@ public class UsersRepositoryTest {
     public Users createMember(){
         UsersDTO usersDTO = new UsersDTO();
 
-        usersDTO.setUserid("aaa");
+        usersDTO.setUserid("ttt");
         usersDTO.setPassword("1234");
         usersDTO.setName("알파");
-        usersDTO.setEmail("aaa@naver.com");
+        usersDTO.setEmail("ttt@naver.com");
         usersDTO.setPhone("010-1231-3123");
         usersDTO.setBirthDate("19990101");
 
@@ -59,7 +59,7 @@ public class UsersRepositoryTest {
     public void saveMemberTest(){
 
         Users users = createMember();
-        Users savedMember =  loginService.saveMember(users);
+        Users savedMember =  loginService.saveUsers(users);
 
         // assertEquals메소드를 이용하여 저장하려고 요청했던 값과 실제 저장된 데이를 비교
         // assertEquals(기대값, 실제값);
@@ -76,10 +76,10 @@ public class UsersRepositoryTest {
         Users memberTest1 = createMember();
         Users memberTest2 = createMember();
 
-        loginService.saveMember(memberTest1);
+        loginService.saveUsers(memberTest1);
 
         Throwable e = assertThrows(IllegalStateException.class, () ->{
-            loginService.saveMember(memberTest2);
+            loginService.saveUsers(memberTest2);
         });
 
         assertEquals("이미 가입된 회원입니다.",e.getMessage());

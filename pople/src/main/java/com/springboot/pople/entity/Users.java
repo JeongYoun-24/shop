@@ -30,6 +30,7 @@ public class Users {
     private String phone;
     @Column(nullable = false)
     private String birthDate;
+
     @Enumerated(EnumType.STRING)
     private Role role;
     private LocalDateTime regDate;

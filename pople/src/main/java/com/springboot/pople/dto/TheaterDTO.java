@@ -1,23 +1,28 @@
 package com.springboot.pople.dto;
 
-import com.springboot.pople.entity.Cinema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import com.springboot.pople.entity.Theater;
+import lombok.*;
+import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
+@ToString
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class TheaterDTO {
 
 
     private Long id ;
     private Long cinemaid; // 영화관 번호
 
-
+    private static ModelMapper modelMapper = new ModelMapper();
+    public static TheaterDTO of(Theater theater){
+        // entity -> dto
+        return modelMapper.map(theater, TheaterDTO.class);
+    }
 
 }

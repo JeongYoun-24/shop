@@ -20,7 +20,7 @@ public class LoginService {
 
 
 
-    public Users saveMember(Users users){
+    public Users saveUsers(Users users){
         // 서버에서 validate적용
         validateDuplicateMember(users);
         return usersRepository.save(users);

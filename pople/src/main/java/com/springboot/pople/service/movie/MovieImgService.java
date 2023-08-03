@@ -19,7 +19,9 @@ import javax.persistence.EntityNotFoundException;
 @Log4j2
 public class MovieImgService {
 
-    @Value("${org.zerock.upload.path}")
+//    @Value("${org.zerock.upload.path}")
+//    private String itemImgLocation;
+    @Value("${itemImgLocation}")
     private String itemImgLocation;
 
     private final MovieImgRepository movieImgRepository;
@@ -71,7 +73,7 @@ public class MovieImgService {
                     oriImgName,
                     itemImgFile.getBytes());
 
-            String imgUrl = "/images/item/item/" + imgName;
+            String imgUrl = "/images/movie/movie/" + imgName;
 
             // 수정 폼으로 받은 상품이미지 정보 entity로 전달
             // entity가 변경되면 영속성 상태에서 자동으로 update쿼리 실행

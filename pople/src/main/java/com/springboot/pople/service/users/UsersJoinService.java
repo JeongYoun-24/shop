@@ -13,17 +13,17 @@ public class UsersJoinService {
 
     private final UsersRepository usersRepository;
 
-    public Users saveUsers(Users member){
+    public Users saveUsers(Users users){
         // 서버에서 validate적용
-        validateDuplicateMember(member);
-        return usersRepository.save(member);
+        validateDuplicateMember(users);
+        return usersRepository.save(users);
     }
 
-    private void validateDuplicateMember(Users member){
-        Users findMember = usersRepository.findByEmail(member.getEmail());
+    private void validateDuplicateMember(Users users){
+        Users findUsers = usersRepository.findByEmail(users.getEmail());
 
         // 이미 가입된 회원인 경우 예외 발생
-        if (findMember != null){
+        if (findUsers != null){
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
 

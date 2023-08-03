@@ -1,25 +1,30 @@
 package com.springboot.pople.entity;
 
+import com.springboot.pople.constant.SeatStatus;
 import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
+@Setter
 @Builder
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Seat")
+@Table(name = "seat")
 public class Seat {
-
+//(exclude={"theater","cinema","seatStatus"})
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seat_id")
     private Long seatid;  // 좌석 코드
     private int seatNo; //좌석 번호
     private int seatGroup; // 좌석 그룹
-    private int seatLineNo; // 좌석 라인줄 번호
+    private String seatLineNo; // 좌석 라인줄 번호
+
+//    @Enumerated(EnumType.STRING)
+//    private SeatStatus seatStatus;
 
     @ManyToOne
     @JoinColumn(name = "theater_id")

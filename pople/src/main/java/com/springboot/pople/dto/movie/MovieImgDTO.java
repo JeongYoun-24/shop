@@ -3,10 +3,12 @@ package com.springboot.pople.dto.movie;
 import com.springboot.pople.entity.MovieImg;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.modelmapper.ModelMapper;
 
 @Getter
 @Setter
+@ToString
 public class MovieImgDTO {
 
     private Long id;

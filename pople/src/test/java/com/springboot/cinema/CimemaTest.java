@@ -2,9 +2,7 @@ package com.springboot.cinema;
 
 import com.springboot.pople.PopleApplication;
 import com.springboot.pople.entity.Cinema;
-import com.springboot.pople.entity.Movie;
 import com.springboot.pople.repository.CinemaRepository;
-import com.springboot.pople.repository.MovieRepository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
-import javax.persistence.Column;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,21 +29,37 @@ public class CimemaTest {
 //        IntStream.rangeClosed(3, 5).forEach(i -> {
 //             객체 생성
         Cinema cinema = Cinema.builder()
-                    .cinemaid(2L)
-                    .cinemaName("CGV" )
-                    .cinemaAddrss("경상남도 양산시 증산역앞 CGV ")
-                    .cinemaSeatCount(72)
+                .cinemaName("메가박스" )
+                .cinemaAddrss("경상남도 양산시 강변로 440")
+                .cinemaSeatCount(72)
+                .xaxis("35.33826634341823")
+                .yaxis("129.02693159659853 ")
+                .build();
 
-                    .build();
-
-
-
-            // 영속성 컨텍스트에 반영
         Cinema result = cinemaRepository.save(cinema);
 
 //        });
 
     }
+//    Cinema cinema = Cinema.builder()
+//            .cinemaName("롯데시네마 양산물금" )
+//            .cinemaAddrss("경상남도 양산시 물금읍 백호로 68 ")
+//            .cinemaSeatCount(72)
+//            .xaxis("35.318002138539356")
+//            .yaxis("129.00190453388709 ")
+//            .build();
+//      Cinema result = cinemaRepository.save(cinema);
+//    Cinema cinema = Cinema.builder()
+
+//            .cinemaName("메가박스" )
+//            .cinemaAddrss("경상남도 양산시 물금읍 증산역로 177 ")
+//            .cinemaSeatCount(72)
+//            .xaxis("35.30989962941276")
+//            .yaxis("129.0094416146745")
+//            .build();
+//
+//    Cinema result = cinemaRepository.save(cinema);
+
 
 
     @Test
@@ -86,6 +99,7 @@ public class CimemaTest {
         cinemaRepository.deleteById(movie_code);
 
     }
+
 
 
 

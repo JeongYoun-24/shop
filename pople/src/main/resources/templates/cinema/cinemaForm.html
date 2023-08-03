@@ -11,20 +11,92 @@
 </head>
 <body>
 
- <main>
-	 <div layout:fragment="content" class="m-2 p-2 ">
+<main>
+	<div layout:fragment="content" class="m-2 p-2 ">
+		<h3>영화관 등록</h3>
+		<div>
+			<div><input type="text" name="cinemaName" id="cinemaName" class="" placeholder="영화관 이름">  </div>
+			<div><input type="text" name="cinemaAddrss" id="cinemaAddrss" class="" placeholder="영화관 주소">  </div>
+			<div><input type="number" name="cinemaSeatCount" id="cinemaSeatCount" class="" placeholder="영화관 좌석갯수">  </div>
+			<div><input type="text" name="xAxis" id="xAxis" class="" placeholder="x좌표">  </div>
+			<div><input type="text" name="yAxis" id="yAxis" class="" placeholder="y좌표">  </div>
+			<div id="error"></div>
+
+		</div>
+		<button id="cinemaBtn">저장</button>
+
+	</div>
 
 
 
-
-	 </div>
-
-
-
- </main>
+</main>
 
 
 
 
 </body>
+<script  layout:fragment="script" th:inline="javascript">
+	$(function(){
+		$('#cinemaBtn').click(function(){
+			var cinemaName = $('#cinemaName').val()
+			var cinemaAddrss = $('#cinemaAddrss').val()
+			var cinemaSeatCount = $('#cinemaSeatCount').val()
+			var xAxis = $('#xAxis').val()
+			var yAxis = $('#yAxis').val()
+
+		var data =  {
+		cinemaName : cinemaName,
+		cinemaAddrss : cinemaAddrss,
+		cinemaSeatCount : cinemaSeatCount ,
+		xAxis : xAxis ,
+		yAxis : yAxis
+
+		}
+		console.log(data);
+
+		$.ajax({
+ 		type: "POST",
+            url: "/cinema/form",
+            data: JSON.stringify(data), // http body데이터
+            contentType: "application/json; charset=utf-8", // body데이터가 어떤 타입인지 (MIME)
+            dataType: "text", // 요청을 서버로해서 응답이 왔을 때, 기본적으로 모든 것이 문자열 (생긴게 json이라면 javascript 오브젝트로 변경해줌)
+			success : function(data){
+
+			var jsonMessage = data;
+			console.log(jsonMessage);
+			if(jsonMessage =="실패"){
+				$('#error').text("입력창 재확인 해주세요")
+				alert("입력값에 오류발생");
+			}
+			if(jsonMessage =="성공"){
+				alert("등록 성공");
+			}
+
+
+			},
+			error: function(){
+
+			},
+			complete : function(){
+
+			}
+
+
+		}) //end
+
+
+
+
+
+		})
+
+
+	})
+
+
+
+</script>
+<style  layout:fragment="css" th:inline="css">
+
+</style>
 </html>

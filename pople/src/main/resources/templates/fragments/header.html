@@ -72,10 +72,20 @@
 									<ul class="dropdown-menu">
 										<li><a class="dropdown-item" href="#">패키지</a></li>
 										<li><a class="dropdown-item" href="#">영화관람권</a></li>
-										<li><hr class="dropdown-divider"></li>
 										<li><a class="dropdown-item" href="#">베스트</a></li>
 									</ul>
 								</li>
+								<li class="nav-item dropdown" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">스토어</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="/cinema/form">영화관 등록</a></li>
+										<li><a class="dropdown-item" href="/theater/form">상영관 등록</a></li>
+										<li><a class="dropdown-item" href="/seat/form">좌석 등록</a></li>
+										<li><a class="dropdown-item" href="#">상영 일정 등록</a></li>
+									</ul>
+								</li>
+
+
 							</ul>
 						</div>
 						<div class="col-3">
@@ -90,7 +100,7 @@
 						<div class="col-3">
 							<ul class="navbar-nav login ">
 								<li class="nav-item active" sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a class="nav-link" href="/movie/admin/register">영화등록</a></li>
-								<li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a class="nav-link" href="/movie/item/items">영화관리</a></li>
+								<li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a class="nav-link" href="/movie/admin/movies">영화관리</a></li>
 								<li class="nav-item">
 <!--									<a class="nav-link " href="/users/loginpage">로그인</a>-->
 								</li>

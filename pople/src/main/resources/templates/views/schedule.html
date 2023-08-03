@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout2}">
+<title>예매 페이지</title>
+
+<div layout:fragment="content" class="m-3 p-3">
+
+    <!-- 리스트 -->
+    <div class="row mt-3">
+        <div class="col">
+
+            <div class="card">
+                [[${cinema}]]
+                <hr>
+                [[${seat}]]
+                <h5 class="card-header">영화 예매 페이지 </h5>
+                <div class="card-body">
+
+
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+<script layout:fragment="script"    th:inline="javascript">
+
+
+
+</script>
+<style  layout:fragment="css"       th:inline="css">
+        .clearBtn {
+            margin-left: 0.3em;
+        }
+
+        .pagination a {
+            cursor: pointer;
+        }
+        .btn-outline-dark:hover{
+
+        }
+
+
+    </style>
+</html>

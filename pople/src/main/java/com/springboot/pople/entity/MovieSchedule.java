@@ -30,9 +30,20 @@ public class MovieSchedule {
     @ManyToOne
     @JoinColumn(name = "movie_id") // 영화 FK
     private Movie movie;
+    private String dayTime;
+
 
     private LocalDateTime scheduleDate; // 영화 날짜
     private Time startTime;  // 영화 시작
     private Time endTime;    // 영화 종료
+
+
+    public void update(Time startTime,Time endTime){
+        this.startTime = startTime;
+        this.endTime = endTime;
+
+
+    }
+
 
 }

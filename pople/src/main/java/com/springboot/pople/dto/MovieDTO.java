@@ -2,6 +2,7 @@ package com.springboot.pople.dto;
 
 
 
+import com.springboot.pople.constant.MovieStatus;
 import com.springboot.pople.dto.movie.MovieImgDTO;
 import lombok.*;
 
@@ -25,7 +26,8 @@ public class MovieDTO {
     private String movieTime; // 영화 러닝 타임
     private String moveiRating; // 영화 관람 등급
     private String movieDate;  //   영화 개봉일
-    private Boolean movieStatus;  // 영화 게시 여부
+
+    private MovieStatus movieStatus;  // 영화 게시 여부
 
 
 

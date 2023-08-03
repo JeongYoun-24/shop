@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MovieImgRepository extends JpaRepository<MovieImg,Long> {
 
-    List<MovieImg> findByIdOrderByIdAsc(Long Id);
+    List<MovieImg> findByMovie_MovieidOrderByIdAsc(Long movieId);
 
 
 }
