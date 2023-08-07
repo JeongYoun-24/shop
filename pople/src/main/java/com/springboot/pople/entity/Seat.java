@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-@ToString
+@ToString(exclude = "seatStatus" )
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -23,13 +23,14 @@ public class Seat {
     private int seatGroup; // 좌석 그룹
     private String seatLineNo; // 좌석 라인줄 번호
 
-//    @Enumerated(EnumType.STRING)
-//    private SeatStatus seatStatus;
+    @Enumerated(EnumType.STRING)
+    private SeatStatus seatStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "theater_id")
     private Theater theater;  // 상영관 번호  N대 1관계
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;  // 영화관 번호  N대 1 관계
 

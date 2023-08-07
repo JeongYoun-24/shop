@@ -40,6 +40,8 @@ public class Movie {  // 영화
     @Enumerated(EnumType.STRING)
     private MovieStatus movieStatus;  // 영화 게시 여부
 
+    private int price;
+
 
     public void change(String movie_name,String movie_poster,String movie_summary){
         this.movieName = movieName;

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout2}">
+<title>예매 페이지</title>
+
+<div layout:fragment="content" class="m-3 p-3">
+
+    <!-- 리스트 -->
+    <div class="row mt-3">
+        <div class="col">
+
+            <div class="card">
+                <!--                [[${cinema}]]-->
+                <!--                <hr>-->
+                <!--                [[${seat}]]-->
+                <div>
+                    <div class="row">
+                        <!-- 대표 이미지 -->
+                        <div class="col-md-4">
+
+
+                        </div>
+                        <div class="col-md-2"></div>
+
+
+                        <!-- 상품 판매 상태이면 장바구니 주문 하기 버튼 활성화 -->
+                        <hr class="my-4">
+
+
+                    </div>
+
+                </div>
+
+                <th:block th:each="cinema, status: ${cinema}">
+                    [[${cinema.cinemaid}]]
+
+                </th:block>
+
+                <h5 class="card-header">영화 예매 페이지 </h5>
+                <div class="card-body">
+                    <form action="/schedule/form" method="post">
+                        <div class="d-flex justify-content-center">
+
+                            <label>영화관</label>
+                            <select id="cinemaid" class="cinemaHeader" name="cinemaid" >
+                                <option   th:value="${cinema.cinemaid}" th:each="cinema, status: ${cinema}">[[${cinema.cinemaName}]]</option>
+
+                            </select>
+                            <input type="hidden" id="addrssid">
+                            <label>상영관</label>
+                            <select id="theaterid" class="" name="theaterid" >
+                                <option  th:value="${theater.id}" th:each="theater, status: ${theater}">[[${theater.id}]]</option>
+
+                            </select>
+                            <label>영화</label>
+                            <select id="movieName" class="" name="movieName" >
+                                <option  th:value="${movie.movieName}" th:each="movie, status: ${movie}">[[${movie.movieName}]]</option>
+
+                            </select>
+
+                            <!--                            [[${theater}]]-->
+                        </div>
+                        <div class="">
+                            <label>영화</label>
+                            <select class="" id="dayTime" name="dayTime" aria-label="Default select example">
+                                <option value="아침">아침</option>
+                                <option value="점심">점심</option>
+                                <option value="오후">오후</option>
+                                <option value="저녁">저녁</option>
+                                <option value="새벽">새벽</option>
+                            </select>
+
+                        </div>
+                        <div>
+                            <label>영화시작 시간</label>
+                            <select class="" id="startTime" name="startTime" aria-label="Default select example">
+                                <option value="9:30">9:30</option>
+                                <option value="12:00">12:00</option>
+                                <option value="15:30">15:30</option>
+                                <option value="18:00">18:00</option>
+                                <option value="21:00">21:30</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>영화 종료시간</label>
+                            <select class="" id="endTime" name="endTime" aria-label="Default select example">
+                                <option value="12:30">12:30</option>
+                                <option value="15:30">15:00</option>
+                                <option value="18:00">18:30</option>
+                                <option value="21:30">21:30</option>
+                                <option value="00:30">00:30</option>
+                            </select>
+                        </div>
+
+                        <div id="qqqq2">
+                            <button type="submit" class="" id="btn">저장(등록)</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script th:src="@{/js/cinema.js}"></script>
+<script layout:fragment="script"    th:inline="javascript">
+    $(function(){
+        $('#btn').click(function(e){
+            e.preventDefault();
+            var cinemaid = $('#cinemaid').val()
+            var theaterid = $('#theaterid').val()
+            var movieName = $('#movieName').val()
+            var dayTime = $('#dayTime').val()
+            var startTime = $('#startTime').val()
+            var endTime = $('#endTime').val()
+                  console.log(cinemaid)
+                  console.log(theaterid)
+                   console.log(movieName)
+                  console.log(dayTime)
+                  console.log(startTime)
+                  console.log(endTime)
+            var data = {
+                 cinemaid : $('#cinemaid').val(),
+                theaterid : $('#theaterid').val(),
+                movieName : $('#movieName').val(),
+                dayTime : $('#dayTime').val(),
+                startTime : $('#startTime').val(),
+                endTime : $('#endTime').val()
+
+                };
+
+                $.ajax({  //페이지가 아닌 데이터만 보내기
+                type: "POST",
+                async: true, //true=비동기
+                url: "/schedule/form",
+               // dataType : "json", //서버로부터 받은 데이터 타입
+                data:JSON.stringify(data), //매개변수
+                contentType: "application/json; charset=utf-8",
+                 success: function(data) {
+
+
+                 },
+                error: function(){
+
+                },
+                complete : function(){
+
+                }
+
+
+            }) //end
+
+
+
+
+        })
+
+
+
+    })
+
+
+</script>
+<style  layout:fragment="css"       th:inline="css">
+        .clearBtn {
+            margin-left: 0.3em;
+        }
+
+        .pagination a {
+            cursor: pointer;
+        }
+        .btn-outline-dark:hover{
+
+        }
+
+
+    </style>
+</html>

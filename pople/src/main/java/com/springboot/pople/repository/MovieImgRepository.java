@@ -10,4 +10,5 @@ public interface MovieImgRepository extends JpaRepository<MovieImg,Long> {
     List<MovieImg> findByMovie_MovieidOrderByIdAsc(Long movieId);
 
 
+    MovieImg findByMovie_MovieidAndRepImgYn(Long movieId, String repImgYn);
 }

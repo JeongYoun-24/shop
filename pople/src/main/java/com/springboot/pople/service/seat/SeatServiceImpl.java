@@ -2,7 +2,9 @@ package com.springboot.pople.service.seat;
 
 import com.springboot.pople.dto.CinemaDTO;
 import com.springboot.pople.dto.SeatDTO;
+import com.springboot.pople.dto.SeatFormDTO;
 import com.springboot.pople.dto.TheaterDTO;
+import com.springboot.pople.dto.theater.TheaterFormDTO;
 import com.springboot.pople.entity.Cinema;
 import com.springboot.pople.entity.Movie;
 import com.springboot.pople.entity.Seat;
@@ -74,6 +76,29 @@ public class SeatServiceImpl implements SeatService {
     @Override
     public void remove(Long seatid) {
 
+    }
+
+    @Override
+    public List<SeatDTO> theaterList(Long theaterid) {
+        log.info(theaterid);
+        List<Seat> seatList = seatRepository.findByTheater_Id(theaterid);
+        log.info("fsdfsdfsdfsdfsdfsd12155"+seatList);
+
+        List<SeatDTO> seatFormDTOList = new ArrayList<>();
+        for(Seat seat : seatList){
+            SeatDTO seatListDTO = SeatDTO.of(seat);// entity->dto 메서드호출
+            seatFormDTOList.add(seatListDTO);
+        }
+        List<SeatDTO> theaterDTOList2 = new ArrayList<>();
+//        for(SeatFormDTO formDTO : seatFormDTOList){
+//            SeatDTO theaterListDTO2 = SeatDTO.builder()
+//                    .seatNo(formDTO.getSeatNo())
+//                    .seatLineNo(formDTO.getSeatLineNo())
+//                    .seatGroup(formDTO.getSeatGroup())
+//                    .build();// entity->dto 메서드호출
+//            theaterDTOList2.add(theaterListDTO2);
+//        }
+        return seatFormDTOList;
     }
 
     @Override

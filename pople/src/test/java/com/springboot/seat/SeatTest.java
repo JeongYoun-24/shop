@@ -1,7 +1,10 @@
 package com.springboot.seat;
 
 import com.springboot.pople.PopleApplication;
+import com.springboot.pople.dto.SeatDTO;
+import com.springboot.pople.dto.SeatFormDTO;
 import com.springboot.pople.dto.TheaterDTO;
+import com.springboot.pople.dto.theater.TheaterFormDTO;
 import com.springboot.pople.entity.Cinema;
 import com.springboot.pople.entity.Seat;
 import com.springboot.pople.entity.Theater;
@@ -16,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @Log4j2
@@ -50,12 +54,35 @@ public class SeatTest {
                     .theater(theater)
 
                     .build();
-        seatRepository.save(seat);
+            seatRepository.save(seat);
 
 
         });
 
     }
+
+    @Test
+    @DisplayName(value = "영화관 id값으로 조회 테스트 ")
+    public void Test2(){
+        Long id = 3L;
+
+        SeatFormDTO seatDTO = SeatFormDTO.builder()
+
+                .build();
+        log.info("1221"+seatDTO);
+        List<Seat> theaterDTOList= seatRepository.findByTheater_Id(id);
+        log.info("1221"+theaterDTOList);
+//       List<SeatDTO>  seatDTOS=   seatService.theaterList(seatDTO.getTheaterid());
+
+
+//        log.info("122fsdfsd1"+seatDTOS);
+
+
+
+    }
+
+
+
 //    private Long seatid;  // 좌석 코드
 //    private int seatNo; //좌석 번호
 //    private int seatGroup; // 좌석 그룹

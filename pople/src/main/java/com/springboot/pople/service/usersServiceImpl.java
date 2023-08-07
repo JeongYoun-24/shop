@@ -35,9 +35,10 @@ public class usersServiceImpl implements UsersService{
 
     private void validateDuplicateMember(Users users){
         Users findMember = usersRepository.findByEmail(users.getEmail());
+        Users findMember2 = usersRepository.findByNameOrEmail(users.getName() ,users.getEmail());
 
         // 이미 가입된 회원인 경우 예외 발생
-        if (findMember != null){
+        if (findMember2 != null){
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
 

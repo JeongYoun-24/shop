@@ -4,7 +4,10 @@ package com.springboot.pople.dto;
 
 import com.springboot.pople.constant.MovieStatus;
 import com.springboot.pople.dto.movie.MovieImgDTO;
+import com.springboot.pople.entity.Cinema;
+import com.springboot.pople.entity.Movie;
 import lombok.*;
+import org.modelmapper.ModelMapper;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -33,4 +36,12 @@ public class MovieDTO {
 
     @Builder.Default
     private List<MovieImgDTO> imgDTOList = new ArrayList<>();
+    private static ModelMapper modelMapper = new ModelMapper();
+    public static MovieDTO of(Movie movie){
+        // entity -> dto
+        return modelMapper.map(movie, MovieDTO.class);
+    }
+
+
+
 }

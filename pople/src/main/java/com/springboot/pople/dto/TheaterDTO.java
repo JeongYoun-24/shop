@@ -17,6 +17,7 @@ public class TheaterDTO {
 
 
     private Long id ;
+    private String theaterName;
     private Long cinemaid; // 영화관 번호
 
     private static ModelMapper modelMapper = new ModelMapper();

@@ -19,6 +19,8 @@ public class Theater {
     @Column(name = "theater_id")
     private Long id ;
 
+    private String theaterName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;

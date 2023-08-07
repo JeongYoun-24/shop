@@ -1,6 +1,7 @@
 package com.springboot.pople.dto.movie;
 
 import com.springboot.pople.entity.MovieImg;
+import com.springboot.pople.entity.OrderMovie;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,4 +24,12 @@ public class MovieImgDTO {
         // entity -> dto
         return modelMapper.map(movieImg, MovieImgDTO.class);
     }
+
+
+//    public MovieImgDTO(MovieImg ordermovie, String imgUrl){
+//        this.imgName = ordermovie.getMovie().getMovieName();
+//        this.imgUrl = imgUrl;
+//    }
+
+
 }

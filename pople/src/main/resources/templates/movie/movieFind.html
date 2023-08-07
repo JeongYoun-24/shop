@@ -73,8 +73,10 @@
 							<hr class="my-4">
 							<div th:if="${movie.movieStatus == T(com.springboot.pople.constant.MovieStatus).OPEN}" class="d-flex justify-content-between">
 								<div>
-									<button type="button" class="btn btn-outline-dark" id="tickting">예매하기</button>
-
+									<a th:href="'/schedule/find/'+${movie.movieName}">
+										예매하기
+									</a>
+									<!--									<button type="button" class="btn btn-outline-dark" id="tickting">예매하기</button>-->
 								</div>
 								<div>
 									<button type="button" class="btn btn-outline-dark" onclick="addCart()">댓글보기</button>
@@ -138,7 +140,8 @@
 
 	$(function(){
 		$('#tickting').click(function(){
-			location.href="/schedule/find";
+		var movie = $('#movieid').val();
+			location.href="/schedule/find?movieid="+movie;
 
 		})
 

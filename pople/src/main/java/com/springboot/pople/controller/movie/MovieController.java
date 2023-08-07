@@ -57,7 +57,7 @@ public class MovieController {
     Long movieid = id;
     log.info(movieid);
 
-      MovieFormDTO movieFormDTO =  movieService2.getMovieDtl(movieid);
+        MovieFormDTO movieFormDTO =  movieService2.getMovieDtl(movieid);
       log.info(movieFormDTO.getMovieImgDTOList());
 
 

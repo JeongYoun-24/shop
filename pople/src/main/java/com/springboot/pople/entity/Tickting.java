@@ -1,10 +1,13 @@
 package com.springboot.pople.entity;
 
 
+import com.springboot.pople.constant.TicktingStatus;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -42,6 +45,17 @@ public class Tickting {
     private String phone;     // 핸드폰 번호
     private String cardCheck;   // 카드 결제 유무
     private LocalDateTime regDate;  // 결제 날짜
+    @Enumerated(EnumType.STRING)
+    private TicktingStatus ticktingStatus;  // 예매 여부 얘매중, 취소
+    private String movieRating; // 관람등급
+
+    @OneToMany(
+            fetch = FetchType.LAZY,
+//              mappedBy = "/templates/order",
+            orphanRemoval = true, // 고아객체 제거
+            cascade = CascadeType.ALL) // 고객이 주문할 상품을 선택하고 주문할 때 주문 엔티티를 저장하면서 주문 상품 엔티티도 함께 저장되는 경우
+    private List<Tickting> orderMovies = new ArrayList<>();
+
 
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)

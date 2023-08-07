@@ -5,6 +5,7 @@ import com.springboot.pople.dto.MovieListCountDTO;
 import com.springboot.pople.dto.PageRequestDTO;
 import com.springboot.pople.dto.PageResponseDTO;
 
+import com.springboot.pople.dto.movie.MovieFormDTO;
 import com.springboot.pople.entity.Movie;
 
 import java.util.HashMap;
@@ -18,6 +19,10 @@ public interface MovieService {
     public MovieDTO readOne(Long movieid);
     public void modify(MovieDTO movieDTO);
     public void remove(Long movieid);
+
+    public MovieDTO nameOne(String movieName);
+    public List<MovieDTO> AllList();
+
 
 //    default Map<String,Object> dtoToEntity(MovieDTO movieDTO){
 //        Map<String,Object> entityMap = new HashMap<>();

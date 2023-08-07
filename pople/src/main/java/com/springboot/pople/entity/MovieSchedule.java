@@ -3,7 +3,6 @@ package com.springboot.pople.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.time.LocalDateTime;
 
 @Getter
@@ -12,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @Entity
+@Builder
 public class MovieSchedule {
 
     @Id
@@ -30,15 +30,16 @@ public class MovieSchedule {
     @ManyToOne
     @JoinColumn(name = "movie_id") // 영화 FK
     private Movie movie;
+
     private String dayTime;
 
 
     private LocalDateTime scheduleDate; // 영화 날짜
-    private Time startTime;  // 영화 시작
-    private Time endTime;    // 영화 종료
+    private String startTime;  // 영화 시작
+    private String endTime;    // 영화 종료
 
 
-    public void update(Time startTime,Time endTime){
+    public void update(String startTime,String endTime){
         this.startTime = startTime;
         this.endTime = endTime;
 

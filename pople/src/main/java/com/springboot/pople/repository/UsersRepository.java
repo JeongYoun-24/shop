@@ -18,6 +18,7 @@ public interface UsersRepository  extends JpaRepository<Users,String>, QuerydslP
     Users findByUseridOrEmail(String userid,String email); // 비밀번호 찾기
 
     Users findByEmail(String email);
+    Users findByName(String name);
 
 
 //    @Query(value = "select i from Users i where i.user_id and i.user_email")

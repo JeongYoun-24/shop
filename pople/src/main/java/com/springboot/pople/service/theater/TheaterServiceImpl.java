@@ -3,6 +3,7 @@ package com.springboot.pople.service.theater;
 import com.springboot.pople.dto.CinemaDTO;
 import com.springboot.pople.dto.MovieDTO;
 import com.springboot.pople.dto.TheaterDTO;
+import com.springboot.pople.dto.theater.TheaterFormDTO;
 import com.springboot.pople.entity.Cinema;
 import com.springboot.pople.entity.Movie;
 import com.springboot.pople.entity.Theater;
@@ -53,6 +54,29 @@ public class TheaterServiceImpl  implements  TheaterService{
         TheaterDTO theaterDTO = modelMapper.map(movie, TheaterDTO.class);
         log.info("비상 값이 안나온다 "+theaterDTO);
         return theaterDTO;
+    }
+
+    @Override
+    public List<TheaterDTO> theaterList(Long cinemaid) {
+        log.info(cinemaid);
+        List<Theater> theaterList = theaterRepository.findByCinema_Cinemaid(cinemaid);
+        log.info("fsdfsdfsdfsdfsdfsd12155"+theaterList);
+
+        List<TheaterFormDTO> theaterDTOList = new ArrayList<>();
+        for(Theater theater : theaterList){
+            TheaterFormDTO theaterListDTO = TheaterFormDTO.of(theater);// entity->dto 메서드호출
+            theaterDTOList.add(theaterListDTO);
+        }
+        List<TheaterDTO> theaterDTOList2 = new ArrayList<>();
+        for(TheaterFormDTO formDTO : theaterDTOList){
+            TheaterDTO theaterListDTO2 = TheaterDTO.builder()
+                    .id(formDTO.getId())
+                    .theaterName(formDTO.getTheaterName())
+                    .build();// entity->dto 메서드호출
+            theaterDTOList2.add(theaterListDTO2);
+        }
+
+        return theaterDTOList2;
     }
 
 

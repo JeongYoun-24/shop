@@ -126,12 +126,21 @@ public class MovieTest {
     @DisplayName("영화 조회")
     public void testFind(){
         Long movieid = 1L;
-     MovieDTO movieDTO =   movieService.readOne(movieid);
-     log.info(movieDTO);
+        MovieDTO movieDTO =   movieService.readOne(movieid);
+        log.info(movieDTO);
 
     }
 
+    @Test
+    @DisplayName("영화 조회")
+    public void testFindss(){
+        String movieName = "범죄도시3";
+//     Movie movie =  movieRepository.findByMovieName(movieName);
+//        log.info(movie);
+        MovieDTO movieDTO =   movieService.nameOne(movieName);
+        log.info(movieDTO);
 
+    }
 
 
 }

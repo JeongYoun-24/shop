@@ -20,13 +20,13 @@ public class CinemaDTO {
 
     private static ModelMapper modelMapper = new ModelMapper();
 
-    private long cinemaid;
+    private Long cinemaid;
     @NotEmpty(message = "영화관이름은 필수 입력 값입니다.")
     private String cinemaName;
     @NotEmpty(message = "영화관주소는 필수 입력 값입니다.")
     private String cinemaAddrss;
     @NotEmpty(message = "영화관좌석은 필수 입력 값입니다.")
-    private long cinemaSeatCount;
+    private int cinemaSeatCount;
 
     private String xaxis;  // x좌표
 
