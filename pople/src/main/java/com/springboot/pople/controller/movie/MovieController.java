@@ -1,13 +1,14 @@
 package com.springboot.pople.controller.movie;
 
-import com.springboot.pople.dto.MovieDTO;
-import com.springboot.pople.dto.MovieListCountDTO;
-import com.springboot.pople.dto.PageRequestDTO;
-import com.springboot.pople.dto.PageResponseDTO;
+import com.springboot.pople.dto.*;
 import com.springboot.pople.dto.movie.MovieFormDTO;
+import com.springboot.pople.entity.Comment;
+import com.springboot.pople.repository.MovieCommentRepository;
+import com.springboot.pople.service.comment.MovieCommentService;
 import com.springboot.pople.service.movie.MovieService;
 
 import com.springboot.pople.service.movie.MovieService2;
+import com.springboot.pople.service.movierev.MovieRevService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -15,6 +16,9 @@ import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.RequestContext;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +36,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -43,6 +48,9 @@ public class MovieController {
 
     private final MovieService2 movieService2;
     private final MovieService movieService;
+    private final MovieCommentService movieCommentService;
+    private final MovieCommentRepository movieCommentRepository;
+    private final MovieRevService movieRevService;
 
 
     @GetMapping("/findList")
@@ -51,17 +59,36 @@ public class MovieController {
         return "movie/movieFind";
     }
 
-    @GetMapping(value = "/find/{id}")
-    public String getMovieFind(@PathVariable("id") Long id, Model model){
+
+    @GetMapping(value = {"/find/{movieName}","/find/{movieName}/{page}"} )
+    public String getMovieFind(@PathVariable("movieName") String movieName,@PathVariable("page") Optional<Integer> page , Model model){
     log.info("영화 상세 정보 요청 ㄱㄱ~~");
-    Long movieid = id;
-    log.info(movieid);
+//    Long movieid = id;
+//    log.info(movieid);
+            MovieDTO movieDTO = movieService.nameOne(movieName);
 
-        MovieFormDTO movieFormDTO =  movieService2.getMovieDtl(movieid);
+
+        MovieFormDTO movieFormDTO =  movieService2.getMovieDtl(movieDTO.getMovieid());
       log.info(movieFormDTO.getMovieImgDTOList());
+        Pageable pageable = PageRequest.of(page.isPresent()?page.get():0, 4);
+        Pageable pageable2 = PageRequest.of(page.isPresent()?page.get():0, 5);
+
+//       List<Comment> comments =  movieCommentRepository.findComment(movieDTO.getMovieid(),pageable);
+//        log.info("값을찾아라`~~!`"+comments);
+
+        Page<CommentFormDTO> commentList =  movieCommentService.findList(movieDTO.getMovieid(),pageable);
+        log.info("값을찾아라`~~!`"+commentList);
+        model.addAttribute("page", pageable.getPageNumber());// 총 페이지 수
+
+        Page<MovieRevFormDTO> moveRevList =  movieRevService.findList(movieDTO.getMovieid(),pageable2);
+        log.info("값을찾아라`~~!`"+moveRevList);
+        model.addAttribute("page2", pageable2.getPageNumber());// 총 페이지 수
 
 
-        model.addAttribute("movie",movieFormDTO);
+        model.addAttribute("maxPage", 5);// 한줄에 보여질 페이지 번호 개수
+        model.addAttribute("movie",movieFormDTO); // 영화 상세 정보
+        model.addAttribute("comment",commentList); // 댓글 리스트
+        model.addAttribute("movieRev",moveRevList); // 리뷰 리스트
 
 
         return "movie/movieFind";

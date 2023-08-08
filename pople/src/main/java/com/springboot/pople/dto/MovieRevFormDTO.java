@@ -1,5 +1,7 @@
 package com.springboot.pople.dto;
 
+import com.springboot.pople.entity.Movie;
+import com.springboot.pople.entity.Users;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -10,13 +12,14 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovieRevDTO {
+public class MovieRevFormDTO {
 
     private Long revid;
 
-    private String userId;
-    private Long movieId;
+    private Users users;
+    private Movie movie;
 
+    
     private String revTitle;
     private String revContent;
     private int star;

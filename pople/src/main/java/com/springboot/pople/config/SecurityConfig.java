@@ -47,6 +47,7 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/main"); //로그아웃 성공시 이동 경로
 
         http.csrf().disable();
+        http.formLogin().loginPage("/users/login");
 
         //인증되지 않은 사용자가 리소스 요청할 경우 에러
         http.exceptionHandling()
@@ -65,7 +66,7 @@ public class SecurityConfig {
                 .anyRequest() //인증 과정 요청
                 .authenticated(); //리소스 접근 경로 설정 외에는 모두 인증을 요구하도록 설정
 */
-        http.formLogin().loginPage("/users/login");
+
 
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());// 403 에러 처리
 

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout2}">
+
+
+<div layout:fragment="content" class="m-3 p-3">
+
+    <!-- register -->
+    <div class="row mt-3">
+
+        <div class="col">
+
+            <div class="card">
+                <h5 class="card-header">공지사항 게시판</h5>
+                <div class="card-body">
+
+                    <h5 class="card-title">공지사항 등록</h5>
+
+                    <!-- board register content -->
+                    <form action="/board/register" method="post" enctype="multipart/form-data"  th:object="${BoardDTO}">
+                        <div class="input-group mb-3">
+                            <label for="title" class="input-group-text">제목</label>
+                            <input type="text" name="title" class="form-control" id="title" th:field="*{title}" placeholder="글제목">
+                        </div>
+                        <div class="input-group mb-3">
+                            <label for="content" class="input-group-text">내용</label>
+                            <textarea class="form-control" name="content" id="content"  th:field="*{content}" rows="5"></textarea>
+                        </div>
+                        <div th:if="${#lists.isEmpty(itemFormDTO.itemImgDTOList)}">
+                            <div class="form-group" th:each="num: ${#numbers.sequence(1,2)}">
+                                <div class="mb-3 img-div">
+                                    <label for="itemImgFile" class="form-label" th:text="상품이미지+${num}"></label>
+                                    <input class="form-control" type="file" name="itemImgFile" id="itemImgFile">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <label for="writer" class="input-group-text">작성자</label>
+                            <input type="text" name="writer" th:value="${#authentication.principal.username}" readonly
+                                   class="form-control" id="writer" placeholder="작성자">
+                        </div>
+                        <div class="my-4">
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary">저장</button>
+                                <button type="reset"  class="btn btn-secondary reset">다시</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 모달창 -->
+    <div></div>
+
+</div>
+
+
+
+
+<script layout:fragment="script"    th:inline="javascript">
+       const errors = [[${errors}]]
+       console.log(errors)
+
+       let errorMsg = ''
+
+       if (errors) {
+            for (let i=0; i<errors.length; i++){
+                errorMsg += `${errors[i].field}은(는) ${errors[i]} \n`
+            }
+       }
+       //alert(errorMsg)
+
+    </script>
+<style  layout:fragment="css"       th:inline="css">
+        .reset {
+            margin-left: 0.2em;
+        }
+    </style>
+</html>

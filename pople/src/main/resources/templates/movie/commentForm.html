@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/layout2}">
+
+
+<div layout:fragment="content" class="m-3 p-3">
+
+	<!-- 리스트 -->
+	<div class=" mt-5">
+		<div class="row" >
+
+			<div>
+				<h3>영화 댓글</h3>
+			</div>
+
+			<div class="m-auto ">
+				<div>
+					<form action="/comment/form" method="post">
+						<input type="text" name="movieid" id="movieid" th:value="${movie.movieid}">
+						<div class="input-group mb-3">
+							<label for="movieName" style="width: 100px;" class="input-group-text">영화 제목 </label>
+							<input type="text" id="movieName" name="movieName" th:value="${movie.movieName}" class="form-control" placeholder="내용" readonly>
+						</div>
+						<div class="input-group mb-3">
+							<label for="title" style="width: 100px;" class="input-group-text">댓글 제목 </label>
+							<input type="text" id="title" name="title"  class="form-control" placeholder="제목" >
+						</div>
+						<div class="input-group mb-3">
+							<label for="content" style="width: 100px;" class="input-group-text">댓글내용 </label>
+							<textarea class="form-control" name="content" id="content" rows="5"></textarea>
+						</div>
+						<div class="input-group mb-3">
+							<label for="userName" style="width: 100px;" class="input-group-text">작성자</label>
+							<input type="text" name="userName" th:value="${#authentication.principal.username}" readonly class="form-control" id="userName" placeholder="작성자">
+						</div>
+<!--						<div class="input-group mb-3">-->
+<!--							<label for="star" style="width: 100px;" class="input-group-text">평점</label>-->
+<!--							<input type="number" name="star"  class="form-control" id="star" max="5" min="1">-->
+<!--						</div>-->
+						<div class="my-4">
+							<div class="d-flex justify-content-end">
+								<button type="submit" class="btn btn-primary">저장</button>
+								<button type="reset"  class="btn btn-secondary reset">Reset</button>
+							</div>
+						</div>
+					</form>
+				</div>
+
+
+			</div>
+
+
+
+
+
+
+
+		</div>
+	</div>
+
+
+
+</div>
+
+
+
+
+<script layout:fragment="script"    th:inline="javascript">
+    const errors = [[${errors}]]
+       console.log(errors)
+
+       let errorMsg = ''
+
+       if (errors) {
+            for (let i=0; i<errors.length; i++){
+                errorMsg += `${errors[i].field}은(는) ${errors[i]} \n`
+            }
+       }
+
+
+
+
+    </script>
+<style  layout:fragment="css"       th:inline="css">
+        .clearBtn {
+            margin-left: 0.3em;
+        }
+
+        .pagination a {
+            cursor: pointer;
+        }
+        .btn-outline-dark:hover{
+
+        }
+
+
+    </style>
+</html>

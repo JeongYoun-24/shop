@@ -26,9 +26,10 @@ public class MovieRev { // 영화 리뷰
     private Movie movie;  // 영화 번호
 
     @Column(nullable = false,length = 500)
-    private String revTitle;
+    private String revTitle; // 제목
     @Column(nullable = false,length = 1000)
-    private String revContent;
+    private String revContent;  // 내용
+    private int star;
     private LocalDateTime revDate;
 
     public void change(String rev_title,String rev_content){
