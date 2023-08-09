@@ -1,11 +1,13 @@
 package com.springboot.pople.entity;
 
+import com.springboot.pople.dto.BoardFormDTO;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,6 +40,17 @@ public class Board {
         this.title = title;
         this.content = content;
     }
+    public void countUp(){
+        this.hitcount +=1;
+    }
+
+    public void updateItem(BoardFormDTO boardFormDTO){
+        this.title = boardFormDTO.getTitle();
+        this.content = boardFormDTO.getContent();
+        this.writer = boardFormDTO.getWriter();
+//        this.itemSellStatus = itemFormDTO.getItemSellStatus();
+    }
+
 
 
 

@@ -65,11 +65,14 @@ public class SeatTest {
     @DisplayName(value = "영화관 id값으로 조회 테스트 ")
     public void Test2(){
         Long id = 3L;
+//        List<Seat> theaterDTOList22= seatRepository.findAll();
+//        log.info("1221"+theaterDTOList22);
+//        SeatFormDTO seatDTO = SeatFormDTO.builder()
 
-        SeatFormDTO seatDTO = SeatFormDTO.builder()
 
-                .build();
-        log.info("1221"+seatDTO);
+
+//                .build();
+//        log.info("1221"+seatDTO);
         List<Seat> theaterDTOList= seatRepository.findByTheater_Id(id);
         log.info("1221"+theaterDTOList);
 //       List<SeatDTO>  seatDTOS=   seatService.theaterList(seatDTO.getTheaterid());

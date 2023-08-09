@@ -7,31 +7,41 @@
 <div layout:fragment="content" class="m-3 p-3">
 
     <!-- register -->
-    <div class="row mt-3">
+    <div class=" mt-3">
 
-        <div class="col">
+        <div class="container">
 
             <div class="card">
                 <h5 class="card-header">공지사항 게시판</h5>
                 <div class="card-body">
+                    <div th:if="${#strings.isEmpty(boardFormDTO.id)}" class="text-center my-2">
+                        <h5 class="card-title">공지사항 등록</h5>
+                    </div>
+                    <!-- 상품정보 수정 버튼 -->
+                    <div th:unless="${#strings.isEmpty(boardFormDTO.id)}" class="text-center my-2">
+                        <h5 class="card-title">공지사항 수정</h5>
+                    </div>
 
-                    <h5 class="card-title">공지사항 등록</h5>
 
                     <!-- board register content -->
-                    <form action="/board/register" method="post" enctype="multipart/form-data"  th:object="${BoardDTO}">
+                    <form action="" method="post" enctype="multipart/form-data"  th:object="${boardFormDTO}">
+                        <input type="hidden" th:field="*{id}">
                         <div class="input-group mb-3">
                             <label for="title" class="input-group-text">제목</label>
                             <input type="text" name="title" class="form-control" id="title" th:field="*{title}" placeholder="글제목">
                         </div>
+                        <p th:if="${#fields.hasErrors('title')}" th:errors="#{title}" class="error"></p>
                         <div class="input-group mb-3">
                             <label for="content" class="input-group-text">내용</label>
                             <textarea class="form-control" name="content" id="content"  th:field="*{content}" rows="5"></textarea>
                         </div>
-                        <div th:if="${#lists.isEmpty(itemFormDTO.itemImgDTOList)}">
-                            <div class="form-group" th:each="num: ${#numbers.sequence(1,2)}">
+                        <p th:if="${#fields.hasErrors('content')}" th:errors="#{content}" class="error"></p>
+
+                        <div th:if="${#lists.isEmpty(boardFormDTO.boairImgDTOList)}">
+                            <div class="form-group" th:each="num: ${#numbers.sequence(1,1)}">
                                 <div class="mb-3 img-div">
-                                    <label for="itemImgFile" class="form-label" th:text="상품이미지+${num}"></label>
-                                    <input class="form-control" type="file" name="itemImgFile" id="itemImgFile">
+                                    <label for="boardImgFile" class="form-label" th:text="공지이미지+${num}"></label>
+                                    <input class="form-control" type="file" name="boardImgFile" id="boardImgFile">
                                 </div>
                             </div>
                         </div>
@@ -41,12 +51,33 @@
                             <input type="text" name="writer" th:value="${#authentication.principal.username}" readonly
                                    class="form-control" id="writer" placeholder="작성자">
                         </div>
-                        <div class="my-4">
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary">저장</button>
-                                <button type="reset"  class="btn btn-secondary reset">다시</button>
+                        <!-- 공지 수정시 적용하는 공지이미지 -->
+                        <div th:if="${not #lists.isEmpty(boardImgDTO)}">
+                            <div class="form-group" th:each="boardImgDTO, status: ${boardImgDTO}">
+                                <div class="mb-3 img-div">
+
+                                    <input class="form-control" type="file" name="boardImgFile" id="boardImgFile2">
+                                    <!-- 공지 수정시 어떤 이미지가 수정되었는지 체크하기위해 공지이미지 아이디값을 설정 -->
+                                    <input type="hidden" name="boardImgIds" th:value="${boardImgDTO.id}">
+                                    <label th:text="${not #strings.isEmpty(boardImgDTO.oriImgName)} ? ${boardImgDTO.oriImgName} : '공지이미지'+${status.index+1} "
+                                           class="form-label"></label>
+                                </div>
                             </div>
                         </div>
+                        <div th:if="${#strings.isEmpty(boardFormDTO.id)}" class="text-center my-2">
+                            <button th:formaction="@{/board/form}" type="submit" class="btn btn-primary">저장</button>
+                        </div>
+                        <!-- 공지정보 수정 버튼 -->
+                        <div th:unless="${#strings.isEmpty(boardFormDTO.id)}" class="text-center my-2">
+                            <button th:formaction="@{'/board/admin/modify/'+${boardFormDTO.id} }" type="submit" class="btn btn-primary">수정</button>
+                        </div>
+
+<!--                        <div class="my-4">-->
+<!--                            <div class="d-flex justify-content-end">-->
+<!--                                <button type="submit" class="btn btn-primary">저장2</button>-->
+<!--                                <button type="reset"  class="btn btn-secondary reset">다시2</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </form>
 
 
@@ -67,22 +98,20 @@
 
 
 <script layout:fragment="script"    th:inline="javascript">
-       const errors = [[${errors}]]
-       console.log(errors)
-
-       let errorMsg = ''
-
-       if (errors) {
-            for (let i=0; i<errors.length; i++){
-                errorMsg += `${errors[i].field}은(는) ${errors[i]} \n`
-            }
-       }
-       //alert(errorMsg)
+       // 서버로부터 에러 메시지가 전달 받았을 경우 alert()호출 하는 부분
+        var errorMessage = [[${errorMessage}]];
+        if(errorMessage != null){
+            alert(errorMessage);
+        }
 
     </script>
 <style  layout:fragment="css"       th:inline="css">
         .reset {
             margin-left: 0.2em;
+        }
+        .error {
+            color: #bd2130;
+            font-size: 0.8em;
         }
     </style>
 </html>

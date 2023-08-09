@@ -72,6 +72,26 @@
                                 <td>1004</td>
                                 <td>2023.8.23</td>
                             </tr>
+                            <tr  th:each="board,bStat : ${board}" th:varStatus="loop">
+                                <th scope="row" th:text="${bStat.count}">  </th>
+
+                                <td>
+                                    <a th:href="@{'/board/find/'+${board.id}}" >
+                                        [[${board.title}]]
+                                    </a>
+                                </td>
+
+                                <td>
+                                    [[${board.writer}]]
+                                </td>
+                                <td>
+                                    [[${board.hitcount}]]
+                                </td>
+
+                                <td>[[${#temporals.format(board.regDate,'yyyy-MM-dd')}]]</td>
+
+
+                            </tr>
 
 
                             </tr>

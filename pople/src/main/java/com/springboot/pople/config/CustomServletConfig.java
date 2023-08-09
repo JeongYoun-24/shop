@@ -11,6 +11,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class CustomServletConfig  implements WebMvcConfigurer {
     @Value("${uploadPath}")
     String uploadPath;
+    @Value("${boarduploadPath}")
+    String uploadPath2;
+
+
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
@@ -26,6 +31,8 @@ public class CustomServletConfig  implements WebMvcConfigurer {
                 addResourceLocations("classpath:/static/bootstrap/");
         registry.addResourceHandler("/images/**")
                 .addResourceLocations(uploadPath);
+        registry.addResourceHandler("/images2/**/")
+                .addResourceLocations(uploadPath2);
 
     }
 }

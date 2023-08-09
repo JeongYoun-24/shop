@@ -8,6 +8,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Value("${uploadPath}")
     String uploadPath;
+    @Value("${boarduploadPath}")
+    String uploadPath2;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -17,6 +19,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // uploadPath에 설정한 폴더를 기준으로 파일을 업로드 하도록 설젇
         registry.addResourceHandler("/images/**")
                 .addResourceLocations(uploadPath);
+        registry.addResourceHandler("/images2/**")
+                .addResourceLocations(uploadPath2);
     }
 }
 
