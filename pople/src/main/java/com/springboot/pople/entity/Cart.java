@@ -25,4 +25,14 @@ public class Cart {
     @JoinColumn(name = "user_id") // 외래키로 설정됨.
     private Users users;
 
+    // 회원 장바구니 생성 : 회원 1명당 1개의 장바구니 맵핑
+    public static Cart createCart(Users users){
+        Cart cart =new Cart();
+        cart.setUsers(users);
+
+        return cart;
+    }
+
+
+
 }

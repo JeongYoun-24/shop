@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/layout}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<title>메인 페이지</title>
+<head>
+	<style>
+		.movieimg {
+			width: 800px;
+			height: 550px;
+		}
+
+	</style>
+
+
+</head>
+<body>
+    <div layout:fragment="content" class="m-2 p-2 ">
+        <div class="container">
+           <!-- <div class="card border border-dark">
+                <div class=" d-flex justify-content-center">
+                    <h3>상품 페이지</h3>
+                </div>
+                th:value="${schedule[0].id}"
+            </div class>-->
+                <div >
+                <ul  class="d-flex border border-1 border-dark">
+                    <li th:if="${categoryid ==1 }">
+                        <input type="radio" class="btn-check shc1" name="item1-data" id="item01" value="1"  autocomplete="off" checked>
+                        <label class="btn " style="width: 300px;"  for="item01">예매권</label>
+                    </li>
+                    <li th:unless="${categoryid == 1}">
+                        <input type="radio" class="btn-check shc1" name="item1-data" id="item1" value="1"  autocomplete="off" >
+                        <label class="btn " style="width: 300px;"  for="item1">예매권</label>
+                    </li>
+
+                    <li th:if="${categoryid ==2 }">
+                        <input type="radio" class="btn-check shc1" name="item1-data" id="item02" value="2"  autocomplete="off" checked>
+                        <label class="btn " style="width: 300px;"  for="item02">패키지</label>
+                    </li>
+                    <li th:unless="${categoryid == 2}">
+                        <input type="radio" class="btn-check shc1" name="item1-data" id="item2" value="2"  autocomplete="off" >
+                        <label class="btn " style="width: 300px;"  for="item2">패키지</label>
+                    </li>
+
+                    <li th:if="${categoryid ==3 }">
+                        <input type="radio" class="btn-check shc1" name="item1-data" id="item03" value="3"  autocomplete="off" checked>
+                        <label class="btn " style="width: 300px;"  for="item03">팝콘</label>
+                    </li>
+                    <li th:unless="${categoryid == 3}">
+                        <input type="radio" class="btn-check shc1" name="item1-data" id="item3" value="3"  autocomplete="off" >
+                        <label class="btn " style="width: 300px;"  for="item3">팝콘</label>
+                    </li>
+
+                    <li th:if="${categoryid ==4 }">
+                        <input type="radio" class="btn-check shc1" name="item1-data" id="item04" value="4"  autocomplete="off" checked>
+                        <label class="btn " style="width: 300px;"  for="item04">음료</label>
+                    </li>
+                    <li th:unless="${categoryid == 4}">
+                        <input type="radio" class="btn-check shc1" name="item1-data" id="item4" value="4"  autocomplete="off" >
+                        <label class="btn " style="width: 300px;"  for="item4">음료</label>
+                    </li>
+
+
+<!--                    <li>-->
+<!--                        <input type="radio" class="btn-check shc1" name="item1-data" id="item2"  value="2" autocomplete="off" >-->
+<!--                        <label class="btn" style="width: 300px;" for="item2">패키지</label>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <input type="radio" class="btn-check shc1" name="item1-data" id="item3"  value="3" autocomplete="off" >-->
+<!--                        <label class="btn" style="width: 300px;" for="item3">팝콘</label>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <input type="radio" class="btn-check shc1" name="item1-data" id="item4"  value="4" autocomplete="off" >-->
+<!--                        <label class="btn" style="width: 300px;" for="item4">음료</label>-->
+<!--                    </li>-->
+                </ul>
+                    
+
+                </div>
+
+<!--            [[${itemList}]]-->
+
+
+            <div>
+            <div class="d-flex"  >
+
+                <div class="mt-5" th:each="item, status: ${itemList}">
+                    
+                    <h6>대표상품</h6>
+                    <div class="card">
+                        <ul class="list">
+                            <li class="sold-out">
+                                <a th:href="'/item/itemFind/'+${item.id}">
+
+                                    <div>
+<!--                                        <img src="https://img.megabox.co.kr/SharedImg/store/2020/12/29/LcfHznA71yOkp20xbVjUBC1AhUCPzDz3_280.png" style="width: 300px; height: 300px;" alt="상품이미지">-->
+<!--                                        <th:block th:each="items, status: ${item.itemImgDTOList}">-->
+<!--                                            <img  src="${items.imgUrl}" th:alt="${items.imgUrl}">-->
+<!--                                        </th:block>-->
+                                        <img th:src="${item.imgUrl}" style="width: 300px; height: 300px;" th:alt="${item.imgUrl}">
+                                    </div>
+
+                                    <div>
+                                        <div class="tit">
+                                            <p>[[${item.itemName}]]</p>
+                                            <p>[[${item.itemDetail}]]</p>
+                                        </div>
+                                        <div class="price">
+                                            <p><em> [[${#numbers.formatInteger(item.price,3,'COMMA')}]]</em> <span>원</span></p>
+                                            <p></p>
+                                        </div>
+
+                                    </div>
+
+
+                                </a>
+                            </li>
+                        </ul>
+
+
+                    </div>
+                </div>
+
+
+                    </div>
+                </div>
+            </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+    <!--    <h6>대표상품</h6>-->
+    <!--    <div class="card">-->
+    <!--        <ul class="list">-->
+    <!--            <li class="sold-out">-->
+    <!--                <a href="">-->
+    <!--                    <div>-->
+    <!--                        &lt;!&ndash;                                        <img src="https://img.megabox.co.kr/SharedImg/store/2020/12/29/LcfHznA71yOkp20xbVjUBC1AhUCPzDz3_280.png" style="width: 300px; height: 300px;" alt="상품이미지">&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                                        <img  th:src="">&ndash;&gt;-->
+    <!--                    </div>-->
+    <!--                    <div>-->
+    <!--                        <div class="tit">-->
+    <!--                            <p>[[${item.itemName}]]</p>-->
+    <!--                            <p>[[${item.itemDetail}]]</p>-->
+    <!--                        </div>-->
+    <!--                        <div class="price">-->
+    <!--                            <p><em> [[${#numbers.formatInteger(item.price,3,'COMMA')}]]</em> <span>원</span></p>-->
+    <!--                            <p></p>-->
+    <!--                        </div>-->
+
+    <!--                    </div>-->
+
+
+    <!--                </a>-->
+    <!--            </li>-->
+    <!--        </ul>-->
+    <!--    </div>-->
+
+
+
+</body>
+
+<script  layout:fragment="script" th:inline="javascript">
+  $(function(){
+    // $('#ct1').hide();
+    $('#ct2').hide();
+    $('#ct3').hide();
+    $('#ct4').hide();
+
+        $('#item1').click(function(){
+            var id = $('#item1').val()
+               console.log("ㄴㄴ")
+            location.href="/item/category/"+id;
+
+
+
+            $('#ct2').show();
+            $('#ct3').show();
+            $('#ct4').show();
+
+        })
+        $('#item2').click(function(){
+
+            var id = $('#item2').val()
+
+            location.href="/item/category/"+id;
+            $('#ct2').show();
+            $('#ct3').hide();
+            $('#ct4').hide();
+            
+        })
+        $('#item3').click(function(){
+          var id = $('#item3').val()
+
+            location.href="/item/category/"+id;
+
+            $('#ct2').hide();
+            $('#ct3').show();
+            $('#ct4').hide();
+                    
+        })
+        $('#item4').click(function(){
+         var id = $('#item4').val()
+
+            location.href="/item/category/"+id;
+            $('#ct2').hide();
+            $('#ct3').hide();
+            $('#ct4').show();
+
+        })
+        
+
+
+  })
+
+
+
+
+</script>
+<style  layout:fragment="css" th:inline="css">
+    a{
+        text-decoration-line: none;
+        color: black;
+        
+        }
+    ul li {
+        list-style-type: none;
+        }
+</style>
+</html>

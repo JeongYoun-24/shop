@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/layout}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<title>메인 페이지</title>
+<head>
+	<style>
+		.movieimg {
+			width: 800px;
+			height: 550px;
+		}
+
+	</style>
+
+
+</head>
+<body>
+    <div layout:fragment="content" class="m-2 p-2 ">
+        <div class="container">
+           <!-- <div class="card border border-dark">
+                <div class=" d-flex justify-content-center">
+                    <h3>상품 페이지</h3>
+                </div>
+                th:value="${schedule[0].id}"
+            </div class>-->
+                <div >
+                <ul  class="d-flex border border-1 border-dark">
+                    <li>
+                        <input type="radio" class="btn-check shc1" name="item1-data" id="item1"  autocomplete="off" checked>
+                        <label class="btn " style="width: 300px;"  for="item1">예매권</label>
+                    </li>
+                    <li>
+                        <input type="radio" class="btn-check shc1" name="item1-data" id="item2"  autocomplete="off" >
+                        <label class="btn" style="width: 300px;" for="item2">패키지</label>
+                    </li>
+                    <li>
+                        <input type="radio" class="btn-check shc1" name="item1-data" id="item3"  autocomplete="off" >
+                        <label class="btn" style="width: 300px;" for="item3">팝콘</label>
+                    </li>
+                    <li>
+                        <input type="radio" class="btn-check shc1" name="item1-data" id="item4"  autocomplete="off" >
+                        <label class="btn" style="width: 300px;" for="item4">음료</label>
+                    </li>
+                </ul>
+                    
+
+                </div>
+
+                <!-- 패키지 상품  -->
+            <div id="ct2">
+                <div class="d-flex" >
+                    <div class="mt-5">
+                        <h6>대표상품</h6>
+                        <div class="card">
+                            <ul class="list">
+                                <li class="sold-out">
+                                    <a href="">
+                                        <div><img src="https://img.megabox.co.kr/SharedImg/store/2020/12/29/LcfHznA71yOkp20xbVjUBC1AhUCPzDz3_280.png" style="width: 300px; height: 300px;" alt="상품이미지"></div>
+                                        <div>
+                                            <div class="tit">
+                                                <p>[러브콤보]</p>
+                                                <p>팝콘1+음료2</p>
+                                            </div>
+                                            <div class="price">
+                                                <p><em>10,000</em> <span>원</span></p>
+                                                <p></p>
+                                            </div>
+
+                                        </div>
+
+
+                                    </a>
+                                </li>
+                            </ul>
+
+
+                        </div>
+                    </div>
+                <div class="mt-5">
+                    <h6>BEST</h6>
+                    <div class="card">
+                       <ul class="list">
+                        <li class="sold-out">
+                            <a href="">
+                                <div><img src="https://img.megabox.co.kr/SharedImg/store/2022/03/07/ERDC5wGVMC0YZPIRUsuuaJuAGRyqeDjC_280.png" style="width: 300px; height: 300px;" alt="상품이미지"></div>
+                                <div>
+                                    <div class="tit">
+                                        <p>[더블콤보]</p>
+                                        <p> 팝콘2+음료2</p>
+                                    </div>
+                                    <div class="price">
+                                        <p><em>13,000</em> <span>원</span></p>
+                                        <p></p>
+                                    </div>
+
+                                </div>
+
+
+                            </a>
+                        </li>
+                       </ul>
+
+
+                    </div>
+				</div>
+                <div class="mt-5">
+                    <h6>NEW</h6>
+                    <div class="card">
+                       <ul class="list">
+                        <li class="sold-out">
+                            <a href="">
+                                <div><img src="https://img.megabox.co.kr/SharedImg/store/2023/07/13/muo0f1sDqziR7MdCuNZiO7cQb5qDrdmP_280.jpg" style="width: 300px; height: 300px;" alt="상품이미지"></div>
+                                <div>
+                                    <div class="tit">
+                                        <p>미니시네마+[러브콤보]</p>
+                                        <p>미니시네마+팝콘1+콜라1</p>
+                                    </div>
+                                    <div class="price">
+                                        <p><em>28,000</em> <span>원</span></p>
+                                        <p></p>
+                                    </div>
+
+                                </div>
+
+
+                            </a>
+                        </li>
+                       </ul>
+
+
+                    </div>
+				</div>
+                <div class="mt-5">
+                    <h6>NEW</h6>
+                    <div class="card">
+                       <ul class="list">
+                        <li class="sold-out">
+                            <a href="">
+                                <div><img src="https://img.megabox.co.kr/SharedImg/store/2023/07/13/hApRC44t2qBnFmLMlpthyuJTLlsC2qzz_280.jpg" style="width: 300px; height: 300px;" alt="상품이미지"></div>
+                                <div>
+                                    <div class="tit">
+                                        <p>미니 시네마 </p>
+                                        <p>미니시네마(단품)</p>
+                                    </div>
+                                    <div class="price">
+                                        <p><em>23,000</em> <span>원</span></p>
+                                        <p></p>
+                                    </div>
+
+                                </div>
+
+
+                            </a>
+                        </li>
+                       </ul>
+
+
+                    </div>
+				</div>
+            </div> <!-- 상품패키지  -->
+            </div>
+
+
+            <!-- 팝콘상품  -->
+            <div id="ct3">
+            <div class="d-flex">
+                <div class="mt-5">
+                    <h6>대표상품</h6>
+                    <div class="card">
+                       <ul class="list">
+                        <li class="sold-out">
+                            <a href="">
+                                <div><img src="http://img.cgv.co.kr/GiftStore/Product/Pc/List/16680652410380.jpg" style="width: 300px; height: 300px;" alt="상품이미지"></div>
+                                <div>
+                                    <div class="tit">
+                                        <p>고소팝콘(M)</p>
+                                        <p>고소팝콘(M)</p>
+                                    </div>
+                                    <div class="price">
+                                        <p><em>6,000</em> <span>원</span></p>
+                                        <p></p>
+                                    </div>
+
+                                </div>
+                                
+
+                            </a>
+                        </li>
+                       </ul>
+
+
+                    </div>
+				</div>
+                <div class="mt-5">
+                    <h6>BEST</h6>
+                    <div class="card">
+                       <ul class="list">
+                        <li class="sold-out">
+                            <a href="">
+                                <div><img src="http://img.cgv.co.kr/GiftStore/Product/Pc/List/16680650063190.jpg" style="width: 300px; height: 300px;" alt="상품이미지"></div>
+                                <div>
+                                    <div class="tit">
+                                        <p>달콤팝콘(M)</p>
+                                        <p>달콤팝콘(M)</p>
+                                    </div>
+                                    <div class="price">
+                                        <p><em>6,000</em> <span>원</span></p>
+                                        <p></p>
+                                    </div>
+
+                                </div>
+                                
+
+                            </a>
+                        </li>
+                       </ul>
+
+
+                    </div>
+				</div>
+                <div class="mt-5">
+                    <h6>NEW</h6>
+                    <div class="card">
+                       <ul class="list">
+                        <li class="sold-out">
+                            <a href="">
+                                <div><img src="http://img.cgv.co.kr/GiftStore/Product/Pc/List/16680685701470.jpg" style="width: 300px; height: 300px;" alt="상품이미지"></div>
+                                <div>
+                                    <div class="tit">
+                                        <p>더블치즈팝콘(M)</p>
+                                        <p>더블치즈팝콘(M)</p>
+                                    </div>
+                                    <div class="price">
+                                        <p><em>6,000</em> <span>원</span></p>
+                                        <p></p>
+                                    </div>
+
+                                </div>
+                                
+
+                            </a>
+                        </li>
+                       </ul>
+
+
+                    </div>
+				</div>
+                <div class="mt-5">
+                    <h6>NEW</h6>
+                    <div class="card">
+                       <ul class="list">
+                        <li class="sold-out">
+                            <a href="">
+                                <div><img src="http://img.cgv.co.kr/GiftStore/Product/Pc/List/16680663726560.jpg" style="width: 300px; height: 300px;" alt="상품이미지"></div>
+                                <div>
+                                    <div class="tit">
+                                        <p>버질 어니언팝콘(M) </p>
+                                        <p>버질 어니언팝콘(M) </p>
+                                    </div>
+                                    <div class="price">
+                                        <p><em>6,000</em> <span>원</span></p>
+                                        <p></p>
+                                    </div>
+
+                                </div>
+                                
+
+                            </a>
+                        </li>
+                       </ul>
+
+
+                    </div>
+				</div>
+            </div><!-- 팝코 상품  -->
+            </div>
+
+            <!-- 음료 상품  -->
+            <div id="ct4">
+            <div class="d-flex" >
+                
+                <div class="mt-5" >
+                    <h6>대표상품</h6>
+                    <div class="card">
+                       <ul class="list">
+                        <li class="sold-out">
+                            <a href="">
+                                <div><img src="http://img.cgv.co.kr/GiftStore/Product/Pc/List/16680718728370.jpg" style="width: 300px; height: 300px;" alt="상품이미지"></div>
+                                <div>
+                                    <div class="tit">
+                                        <p>에이드</p>
+                                        <p>에이드1</p>
+                                    </div>
+                                    <div class="price">
+                                        <p><em>5,000</em> <span>원</span></p>
+                                        <p></p>
+                                    </div>
+
+                                </div>
+                                
+
+                            </a>
+                        </li>
+                       </ul>
+
+
+                    </div>
+				</div>
+                <div class="mt-5">
+                    <h6>BEST</h6>
+                    <div class="card">
+                       <ul class="list">
+                        <li class="sold-out">
+                            <a href="">
+                                <div><img src="http://img.cgv.co.kr/GiftStore/Product/Pc/List/16784409587340.jpg" style="width: 300px; height: 300px;" alt="상품이미지"></div>
+                                <div>
+                                    <div class="tit">
+                                        <p>[더블콤보]</p>
+                                        <p> 팝콘2+음료2</p>
+                                    </div>
+                                    <div class="price">
+                                        <p><em>13,000</em> <span>원</span></p>
+                                        <p></p>
+                                    </div>
+
+                                </div>
+                                
+
+                            </a>
+                        </li>
+                       </ul>
+
+
+                    </div>
+				</div>
+                <div class="mt-5">
+                    <h6>NEW</h6>
+                    <div class="card">
+                       <ul class="list">
+                        <li class="sold-out">
+                            <a href="">
+                                <div><img src="http://img.cgv.co.kr/GiftStore/Product/Pc/List/16784396506850.jpg" style="width: 300px; height: 300px;" alt="상품이미지"></div>
+                                <div>
+                                    <div class="tit">
+                                        <p>핑크레몬에이드</p>
+                                        <p>핑크레몬에이드 1</p>
+                                    </div>
+                                    <div class="price">
+                                        <p><em>5,000</em> <span>원</span></p>
+                                        <p></p>
+                                    </div>
+
+                                </div>
+                                
+
+                            </a>
+                        </li>
+                       </ul>
+
+
+                    </div>
+				</div>
+                <div class="mt-5">
+                    <h6>NEW</h6>
+                    <div class="card">
+                       <ul class="list">
+                        <li class="sold-out">
+                            <a href="">
+                                <div><img src="http://img.cgv.co.kr/GiftStore/Product/Pc/List/16784335517690.jpg" style="width: 300px; height: 300px;" alt="상품이미지"></div>
+                                <div>
+                                    <div class="tit">
+                                        <p>아메리카노(ICE) </p>
+                                        <p>아메리카노(ICE) 1</p>
+                                    </div>
+                                    <div class="price">
+                                        <p><em>4,000</em> <span>원</span></p>
+                                        <p></p>
+                                    </div>
+
+                                </div>
+                                
+
+                            </a>
+                        </li>
+                       </ul>
+                     </div>
+
+                    
+            </div>      
+            </div><!-- 음료 상품  -->
+        </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+</body>
+
+<script  layout:fragment="script" th:inline="javascript">
+  $(function(){
+    // $('#ct1').hide();
+    $('#ct2').hide();
+    $('#ct3').hide();
+    $('#ct4').hide();
+
+        $('#item1').click(function(){
+            $('#ct2').show();
+            $('#ct3').show();
+            $('#ct4').show();
+
+        })
+        $('#item2').click(function(){
+            $('#ct2').show();
+            $('#ct3').hide();
+            $('#ct4').hide();
+            
+        })
+        $('#item3').click(function(){
+            $('#ct2').hide();
+            $('#ct3').show();
+            $('#ct4').hide();
+                    
+        })
+        $('#item4').click(function(){
+            $('#ct2').hide();
+            $('#ct3').hide();
+            $('#ct4').show();
+
+        })
+        
+
+
+  })
+
+
+
+
+</script>
+<style  layout:fragment="css" th:inline="css">
+    a{
+        text-decoration-line: none;
+        color: black;
+        
+        }
+    ul li {
+        list-style-type: none;
+        }
+</style>
+</html>

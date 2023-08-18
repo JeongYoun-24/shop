@@ -146,6 +146,9 @@ public class ScheduleController {
     }
 
 
+
+
+
     @ResponseBody
     @RequestMapping(value = "/cinemaid",method = {RequestMethod.POST}, produces="application/json;charset=UTF-8")
     public CinemaDTO postcinemaid(@RequestBody HashMap<String,Object> map, Model model, HttpServletResponse resp, HttpServletRequest req , BindingResult bindingResult)  throws BindException {

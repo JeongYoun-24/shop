@@ -30,7 +30,7 @@
                             <label for="title" class="input-group-text">제목</label>
                             <input type="text" name="title" class="form-control" id="title" th:value="${boardFormDTO.title}"  placeholder="글제목">
                         </div>
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3  d-flex justify-content-center">
                             <img th:src="${boardImg.imgUrl}" class="img-thumbnail" th:alt="${boardImg.imgName}">
                             <input type="hidden" id="imgName" name="imgName" th:value="${boardImg.imgName}">
                         </div>

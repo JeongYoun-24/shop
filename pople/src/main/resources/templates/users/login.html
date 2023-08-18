@@ -178,7 +178,7 @@
 			<div id="hi">
 				<form action="/main" method="get">
 
-					<button id="btn" type="submit"></button>
+
 				</form>
 
 
@@ -202,42 +202,13 @@
 
 </body>
 <script th:inline="javascript">
- 		//각 입력값들의 유효성 검증을 위한 정규표현식을 변수로 선언.
-  /*       const getIdCheck = RegExp(/^[a-zA-Z0-9]{4,14}$/);
-         const getPwCheck = RegExp(/([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/);
-         const getNameCheck = RegExp(/^[가-힣]+$/);
-		// ID 입력값 검증 (공백확인 , 정규표현식 어긋나는지 확인)
-		$('#signInId').keyup(function() {
-			if($(this).val() === ''){
-				$(this).css('background-color', 'pink');
-			 	$('#idCheck').html('<b style="font-size: 14px; color: red">[아이디는 필수 값입니다.]</b>');
-			 	chk1 = false;
-			}else if(!getIdCheck.test($(this).val())){
-				$(this).css('background-color', 'pink');
-			 	$('#idCheck').html('<b style="font-size: 14px; color: red">[아이디가 형식에 어긋납니다!]</b>');
-			 	chk1 = false;
-			}else{
-				$(this).css('background-color', 'aqua');
-			 	$('#idCheck').html('<b style="font-size: 14px; color: red">[아이디 입력 성공!]</b>');
-			 	chk1 = true;
-			}
-	/ 비밀번호 입력값 검증 (공백확인 , 정규표현식 어긋나는지 확인)
-		$('#signInPw').keyup(function() {
-			if($(this).val() === ''){
-				$(this).css('background-color', 'pink');
-			 	$('#pwCheck').html('<b style="font-size: 14px; color: red">[비밀번호는 필수 값입니다.]</b>');
-			 	chk2 = false;
-			}else if(!getPwCheck.test($(this).val())){
-				$(this).css('background-color', 'pink');
-			 	$('#pwCheck').html('<b style="font-size: 14px; color: red">[비밀번호가 형식에 어긋납니다.]</b>');
-			 	chk2 = false;
-			}else{
-				$(this).css('background-color', 'aqua');
-			 	$('#pwCheck').html('<b style="font-size: 14px; color: red">[비밀번호 입력 성공!]</b>');
-			 	chk2 = true;
-			}
-		}); // 비밀번호 검증 끝
-*/
+ var errorMessage = [[${msg}]];
+        if(errorMessage != null){
+            alert(errorMessage);
+        }
+
+
+
 
      // 자바스크립튼 작성 영역
         console.log("index.html javascript!!!")

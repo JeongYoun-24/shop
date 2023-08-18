@@ -1,0 +1,84 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout2}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>영화 등록</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="m-2 p-2 ">
+
+        <div class="d-flex justify-content-center">
+            <h3>카테고리 등록(지정)</h3>
+
+
+            <div>
+              <form action="/category" method="post">
+              <select name="name" id="name">
+                <option value="예매권">예매권</option>
+                <option value="패키지">패키지</option>
+                <option value="팝콘">팝콘</option>
+                <option value="음료">음료</option>
+             
+              </select>
+              <input type="number" value="1" min="1" name="id" id="id">
+
+                  <button class="btn btn-outline-dark">저장</button>
+
+
+
+            </form>
+
+
+
+            </div>
+        </div>
+
+
+
+
+
+</div>
+</body>
+<script  layout:fragment="script" th:inline="javascript">
+$(function(){
+
+
+})
+// 서버로부터 에러 메시지가 전달 받았을 경우 alert()호출 하는 부분
+        var errorMessage = [[${errorMessage}]];
+        if(errorMessage != null){
+            alert(errorMessage);
+        }
+
+$('#show2').hide()
+	function readURL(moviePoster){
+
+		$('#show2').show()
+
+		if(moviePoster.files && moviePoster.files[0]){
+			//파일 입출력 처리하는 객체 생성
+			var reader = new FileReader();
+
+			reader.onload = function(e){
+				//html에 소스 넘겨주기
+				$('#preview').attr('src',e.target.result)
+
+				//${show = "1"}
+
+			}
+			reader.readAsDataURL(moviePoster.files[0])
+
+		}
+
+	}
+
+</script>
+
+
+</html>

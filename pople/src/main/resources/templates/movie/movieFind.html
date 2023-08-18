@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http//www.thymeleaf.org/extras/spring-security"
 	  layout:decorate="~{layout/layout2}">
 
 
@@ -16,6 +17,13 @@
 
 					<h5 class="card-title">영화 이미지 </h5>
 
+					<div sec:authorize="isAnonymous()">
+						값이 없다
+					</div>
+					<div sec:authorize="isAuthenticated()">
+						<span>[[${#authentication.principal.username}]]</span>
+						<input type="text" id="user" th:value="${#authentication.principal.username}">
+					</div>
 
 
 					<!-- Item list content -->
@@ -73,7 +81,7 @@
 							<hr class="my-4">
 							<div th:if="${movie.movieStatus == T(com.springboot.pople.constant.MovieStatus).OPEN}" class="d-flex justify-content-between">
 								<div>
-									<a th:href="'/schedule/find/'+${movie.movieName}">
+									<a th:href="'/schedule/find/'+${movie.movieName}" class="btn btn-outline-dark">
 										예매하기
 									</a>
 									<!--									<button type="button" class="btn btn-outline-dark" id="tickting">예매하기</button>-->
@@ -105,7 +113,7 @@
 
 						<div>
 							<div>
-								<button></button>
+
 							</div>
 							<div>
 								<div class="d-flex">
@@ -128,11 +136,11 @@
 							<div class="col-md-3">
 								<h3>영화 리뷰</h3>
 							</div>
-							<div  class="col-md-3"><button id="revCleBtn">리뷰닫기</button></div>
+							<div  class="col-md-3"><button id="revCleBtn" class="btn btn-outline-dark ">리뷰닫기</button></div>
 							<div  class="col-md-3"></div>
 
 							<div class="col-md-3 ">
-								<button ><a th:href="'/movieRev/form/'+${movie.movieName}">
+								<button class="btn btn-outline-dark" ><a th:href="'/movieRev/form/'+${movie.movieName}">
 									리뷰 쓰기
 								</a></button>
 							</div>
@@ -147,7 +155,13 @@
 <!--						<div th:unless="${movieRev == null}">-->
 <!--fdsfdsfdsfsfdsfdsf-->
 <!--						</div>-->
-						<div class="d-flex justify-content-center">
+						<th:block th:if="${com != null}">
+							등록된 리뷰가 없습니다.
+
+
+						</th:block>
+
+						<div class="d-flex justify-content-center" th:if="${rev== null}">
 							<table class="table">
 								<thead>
 								<tr>
@@ -248,11 +262,11 @@
 							<div class="col-md-3">
 								<h3>영화 댓글</h3>
 							</div>
-							<div  class="col-md-3"><button id="celBtn">댓글닫기</button></div>
+							<div  class="col-md-3"><button id="celBtn" class="btn btn-outline-dark">댓글닫기</button></div>
 							<div  class="col-md-3"></div>
 
 							<div class="col-md-3 ">
-								<button ><a th:href="'/comment/form/'+${movie.movieName}">
+								<button class="btn btn-outline-dark"><a th:href="'/comment/form/'+${movie.movieName}">
 									댓글쓰기
 								</a></button>
 							</div>
@@ -261,12 +275,12 @@
 						</div>
 
 
-						<th:block th:if="${comment == null}">
-							댓글없다
+						<th:block th:if="${com != null}">
+							등록된 댓글이 없습니다.
 
 
 						</th:block>
-						<div class="d-flex justify-content-center">
+						<div class="d-flex justify-content-center"  th:if="${com== null}">
 							<table class="table">
 								<thead>
 								<tr>
@@ -376,9 +390,13 @@ $(function(){
 
 	$('#commentBtn2').click(function(){  // 댓글 쓰기
 		var movieName = $('#movieName').val();
+		var user = $('#user').val();
+		console.log(user)
 		console.log(movieid)
 
-		location.href="/commetForm?movieName="+movieName;
+		//location.href="/commetForm?movieName="+movieName;
+
+
 	})
 	$('#movieRevBtn').click(function(){ // 리뷰 보기
 		$('#movieRev').show();

@@ -11,8 +11,8 @@
 <head>
 	<style>
 		.movieimg {
-			width: 800px;
-			height: 550px;
+			width: 1600px;
+			height: 1050px;
 		}
 
 	</style>
@@ -27,7 +27,7 @@
 	<div layout:fragment="content" class="m-2 p-2 ">
 
 			<!-- 해당 페이지 콘텐츠 영역 작성 -->
-			<div id="carouselExampleControls" style=" width: 800px; " class="carousel slide d-flex justify-content-center " data-bs-ride="carousel">
+			<div id="carouselExampleControls" style=" width: 800px; color:#99999;" class="carousel w-100 " data-bs-ride="carousel">
 
 				<div class="carousel-inner" >
 					<div class="carousel-item active w-100">
@@ -60,7 +60,7 @@
 					<span class="visually-hidden">Next</span>
 				</button>
 			</div>
-		<div class="position-absolute" style="top:200px ; right: 500px;">
+	<!--	<div class="position-absolute" style="top:200px ; right: 500px;">
 			<div class="" >
 				<div class="p-2"><a href=""><span>빠른예매</span></a></div>
 				<div class="p-2"><a href=""><span>박스오피스</span></a></div>
@@ -69,14 +69,14 @@
 
 			</div>
 
-		</div>
+		</div>-->
 		<div>
 			<div class="mt-5">
 				<button>무비차트</button>
 				<button>상영예정작</button>
 
 			</div>
-				[[${movies.getContent()}]]
+<!--				[[${movies.getContent()}]]-->
 			<input type="hidden" name="searchQuery" th:value="${movieSearchDTO.searchQuery}">
 			<div th:if="${not #strings.isEmpty(movieSearchDTO.searchQuery)}" class="center">
 				<p class="h3 font-weight-bold" th:text="${movieSearchDTO.searchQuery} + '검색결과' ">  </p>
@@ -99,7 +99,7 @@
 									[[${movie.movieDate}]]
 									</p>
 									<div class="d-grid gap-2">
-										<a href="" class=" btn btn-outline-secondary btn-lg">예매하기</a>
+										<a th:href="'/movie/find/'+${movie.movieName} " class=" btn btn-outline-secondary btn-lg">예매하기</a>
 									</div>
 								</div>
 							</div>
@@ -118,7 +118,9 @@
 								<!-- Previous 버튼 -->
 								<li class="page-item" th:classappend="${movies.number eq 0} ? 'disabled':'' ">
 									<a class="page-link"
-									   th:href="@{'/main'+'?searchQuery='+${movieSearchDTO.searchQuery}+'&page='+${movies.number-1}}">Previous</a>
+									   th:href="@{'/main'+'?searchQuery='+${movieSearchDTO.searchQuery}+'&page='+${movies.number-1}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+									</svg></a>
 
 								</li>
 
@@ -132,7 +134,9 @@
 								<!-- Next 버튼 -->
 								<li class="page-item" th:classappend="${movies.number+1 ge movies.totalPages} ? 'disabled':'' ">
 									<!--                                <a class="page-link"  th:onClick="'javascript:page(' + ${items.number+1} + ')'  ">Next</a>-->
-									<a class="page-link" th:href="@{'/main'+'?searchQuery='+${movieSearchDTO.searchQuery}+'&page='+${movies.number+1}}">Next</a>
+									<a class="page-link" th:href="@{'/main'+'?searchQuery='+${movieSearchDTO.searchQuery}+'&page='+${movies.number+1}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+									</svg></a>
 
 								</li>
 							</ul>

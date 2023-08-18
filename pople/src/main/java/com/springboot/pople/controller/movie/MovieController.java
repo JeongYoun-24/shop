@@ -59,6 +59,21 @@ public class MovieController {
         return "movie/movieFind";
     }
 
+    @PostMapping(value = "/movieList")
+    public String movieList(Model model,String movieName){
+        log.info(movieName);
+
+        List<MovieDTO> list= movieService2.movieNameList(movieName);
+
+        if(list.isEmpty()){
+            model.addAttribute("msg","검색한 영화가 없습니다.");
+        }
+        model.addAttribute("movieList",list);
+        log.info("오아"+list.toString());
+
+        return "movie/movieList";
+    }
+
 
     @GetMapping(value = {"/find/{movieName}","/find/{movieName}/{page}"} )
     public String getMovieFind(@PathVariable("movieName") String movieName,@PathVariable("page") Optional<Integer> page , Model model){
@@ -79,11 +94,19 @@ public class MovieController {
         Page<CommentFormDTO> commentList =  movieCommentService.findList(movieDTO.getMovieid(),pageable);
         log.info("값을찾아라`~~!`"+commentList);
         model.addAttribute("page", pageable.getPageNumber());// 총 페이지 수
+        if(commentList.isEmpty()){
+            log.info("댓글이없습니다.");
+            model.addAttribute("com", "댓글이없습니다.");
+        }
+
 
         Page<MovieRevFormDTO> moveRevList =  movieRevService.findList(movieDTO.getMovieid(),pageable2);
         log.info("값을찾아라`~~!`"+moveRevList);
         model.addAttribute("page2", pageable2.getPageNumber());// 총 페이지 수
-
+        if(moveRevList.isEmpty()){
+            log.info("리뷰가이없습니다.");
+            model.addAttribute("rev", "리뷰가없습니다.");
+        }
 
         model.addAttribute("maxPage", 5);// 한줄에 보여질 페이지 번호 개수
         model.addAttribute("movie",movieFormDTO); // 영화 상세 정보
@@ -119,7 +142,7 @@ public class MovieController {
                 .movieName(req.getParameter("movieName"))
                 .moviePoster(req.getParameter("moviePoster"))
                 .movieSummary(req.getParameter("movieSummary"))
-                .moveiRating(req.getParameter("movieRating"))
+                .movieRating(req.getParameter("movieRating"))
                 .movieTime(req.getParameter("movieTime"))
                 .movieDate(req.getParameter("movieDate"))
                 .build();
@@ -159,7 +182,7 @@ public class MovieController {
         return "movie/register";
     }
 
-    // 상품 정보 DB등록 처리
+    // 영화 정보 DB등록 처리
     @PostMapping(value="/admin/register")
     public String itemNew(@Valid MovieFormDTO movieFormDTO, BindingResult bindingResult, Model model,
             @RequestParam("movieImgFile") List<MultipartFile> movieImgFileList   //"itemImgFile" 클라이언트로 넘겨받은 매개변수(files객체)
@@ -186,7 +209,7 @@ public class MovieController {
         return "redirect:/main";
     }
 
-    // 상품 조회
+    // 영화 조회
     @GetMapping(value = "/admin/movie/{movieId}")
     public String itemDtl(@PathVariable("movieId") Long movieId, Model model){
 
@@ -206,7 +229,7 @@ public class MovieController {
         return "movie/register";
     }
 
-    // 상품 정보 수정
+    // 영화 정보 수정
     @PostMapping(value="/admin/movie/{movieId}")
     public String itemUpdate(
             @Valid MovieFormDTO movieFormDTO,
@@ -234,6 +257,9 @@ public class MovieController {
 
         return "redirect:/main";
     }
+
+
+
 
 
 

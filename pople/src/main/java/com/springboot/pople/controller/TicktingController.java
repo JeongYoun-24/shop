@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
@@ -63,23 +64,26 @@ public class TicktingController {
         String costs = (String.valueOf( map.get("costs")));
         String cinemaid = (String.valueOf( map.get("cinemaid")));
         String theaterid = (String.valueOf( map.get("theaterid")));
-        String movieid = (String.valueOf( map.get("movieid")));
         String movieName = (String.valueOf( map.get("movieName")));
         String movieTime = (String.valueOf( map.get("movieTime")));
         String name = (String) map.get("userName");
         String scheduleid = (String) map.get("scheduleid");
+        String movieRating = (String) map.get("movieRating");
 
 
         int count1 = Integer.parseInt(count);
         int costs1 = Integer.parseInt(costs);
 
-        log.info(count);
-        log.info(costs);
-        log.info(cinemaid);
-        log.info(theaterid);
-        log.info(movieid);
-        log.info(movieName);
-        log.info(movieTime);
+        log.info("좌석수"+count);
+        log.info("총가격"+costs);
+        log.info("영화관Id"+cinemaid);
+        log.info("상영관아이디"+theaterid);
+
+        log.info("영화이름"+movieName);
+        log.info("영화러닝타임"+movieTime);
+        log.info("회원이름"+name);
+        log.info("상영시간아이디"+scheduleid);
+        
 
         Long id = Long.parseLong(cinemaid);
         Long theaterId =Long.parseLong(theaterid);
@@ -108,8 +112,10 @@ public class TicktingController {
                 .cinemaName(cinemaDTO.getCinemaName())
                 .count(count1)
                 .ticktingPrice(costs1)
-
+                .movieRating(movieRating)
                 .dayDate(LocalDateTime.now())
+                .regDate(LocalDateTime.now())
+
                 .build();
 
         log.info(ticktingDTO);
@@ -179,8 +185,14 @@ public class TicktingController {
     }
 
     // 2. 회원(고객) 구매 이력 조회
+
     @GetMapping(value = {"/orders","/orders/{page}"} )
     public String orderHist(@PathVariable("page") Optional<Integer> page, Principal principal, Model model){
+
+        if(principal == null){
+            return "/users/login";
+        }
+
 
         // 페이지 번호가 매개변수에 없으면 0으로 설정, 페이지에 보여질 레코드 수)
         Pageable pageable = PageRequest.of(page.isPresent()?page.get():0, 4);
@@ -208,6 +220,7 @@ public class TicktingController {
     @PostMapping(value="/order/{orderId}/cancel")
     public @ResponseBody ResponseEntity cancelOrder(@PathVariable("orderId") Long orderId, Principal principal){
 
+
         log.info("==> 주문취소 상품: "+orderId);
         // 주문 취소 권한 검사
         if (!ticktingService.validateOrder(orderId, principal.getName())){
@@ -222,6 +235,9 @@ public class TicktingController {
     }
     @PostMapping(value="/order/{orderId}/find")
     public @ResponseBody ResponseEntity ticktingFind(@PathVariable("orderId") Long orderId, Principal principal){
+
+
+
         log.info("티켓조회좀 부탁합시다 .");
         OrderDTO orderDTO =   orderService.readOne(orderId);
         log.info("1232132132132132132133"+orderDTO);
@@ -236,7 +252,9 @@ public class TicktingController {
     // 2. 회원(고객) 구매 이력 조회
     @GetMapping(value = {"/tick","/tick/{page}"} )
     public String ticktingHist(@PathVariable("page") Optional<Integer> page, Principal principal, Model model){
-
+        if(principal == null){
+            return "/users/login";
+        }
         // 페이지 번호가 매개변수에 없으면 0으로 설정, 페이지에 보여질 레코드 수)
         Pageable pageable = PageRequest.of(page.isPresent()?page.get():0, 4);
         Page<TicktingHistDTO> orderHistDTOList = ticktingService.getTickList(principal.getName(),pageable );

@@ -11,4 +11,9 @@ public interface MovieImgRepository extends JpaRepository<MovieImg,Long> {
 
 
     MovieImg findByMovie_MovieidAndRepImgYn(Long movieId, String repImgYn);
+
+//    List<MovieImg> findByMovie_MovieidAndRepImgYn(Long movieId, String repImgYn);
+
+
+
 }

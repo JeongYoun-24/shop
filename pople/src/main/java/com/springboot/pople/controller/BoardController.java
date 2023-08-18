@@ -48,7 +48,7 @@ public class BoardController {
     @GetMapping(value = "list")
     public String getBoard(Model model){
         log.info("공지사항 리스트 ㄱㄱ");
-      List<BoardDTO> boardDTO = boardService.AllList();
+        List<BoardDTO> boardDTO = boardService.AllList();
         log.info("1111"+boardDTO);
 
         model.addAttribute("board",boardDTO);

@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -45,8 +46,9 @@ public class TicktingDTO {
     private String cardNum;   // 카드 번호
     private String phone;     // 핸드폰 번호
     private String cardCheck;   // 카드 결제 유무
-    private String regDate;  // 결제 날짜
+    private LocalDateTime regDate;  // 결제 날짜
     private String movieRating; // 관람 등급
+
 
 
     // 주문 상품 정보를 저장할 List객체 생성

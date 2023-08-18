@@ -1,5 +1,6 @@
 package com.springboot.pople.service.tickting;
 
+import com.springboot.pople.constant.TicktingStatus;
 import com.springboot.pople.dto.*;
 import com.springboot.pople.dto.movie.MovieFormDTO;
 import com.springboot.pople.dto.movie.MovieImgDTO;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,10 +57,12 @@ public class TicktingService {
                 .movieCode(ticktingDTO.getMovieCode())       // 영화 아이디
                 .phone(ticktingDTO.getPhone())              // 회원 전화번호
                 .movieTime(ticktingDTO.getMovieTime())          // 영화 러닝타임
+                .movieRating(ticktingDTO.getMovieRating()) // 관람등급
+                .regDate(LocalDateTime.now())    // 결제 날짜
                 .users(users)                                       // 회원정보
                 .movieSchedule(movieSchedule)                  // 상영일정 아이디
                 .theaterCode(ticktingDTO.getTheaterCode())     // 상영관 아이디
-                           // 결제 날짜
+                .ticktingStatus(TicktingStatus.Reserve)     // 예역 여부                                           // 결제 날짜
                 .count(ticktingDTO.getCount())                  // 인원수
                 .seat(ticktingDTO.getSeat())                    // 좌석번호
                 .build();
@@ -77,7 +81,9 @@ public class TicktingService {
 
      Movie movie1 =  movieRepository.findByMovieName(ticktingDTO.getMovieName());
         ticktingDTO.setMovieCode(movie1.getMovieid());
-
+        log.info("값을찾아줘세요"+ticktingDTO.getTicktingPrice());
+        
+        
 
         // 주문 상품에 대한 기본 정보 조회
         Movie movie = movieRepository.findById(ticktingDTO.getMovieCode())
@@ -91,6 +97,7 @@ public class TicktingService {
 
         // 주문할 상품 엔티티와 주문 수량을 이용하여 주문 상품 엔티티를 생성
         OrderMovie orderMovie = OrderMovie.createOrderItem(movie, ticktingDTO.getCount(),ticktingDTO.getTicktingPrice());
+         log.info("최종값은??"+orderMovie);
 
         // 생성된 주문 상품 엔티티를 리스트에 보관
         orderMovieList.add(orderMovie);
@@ -105,7 +112,7 @@ public class TicktingService {
     // 주문 목록 서비스
     @Transactional(readOnly = true)
     public Page<OrderHistDTO> getOrderList(String Name, Pageable pageable){
-
+        log.info("이름??"+Name);
         // 1. 사용자의 아이디(email)와 페이징 조건을 이용해 주문 목록 조회 요청
         List<Order> orders = orderRepository.findOrders(Name, pageable);
 

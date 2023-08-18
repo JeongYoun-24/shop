@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +35,13 @@ public class commentController {
     // 댓글 페이지
 
     @GetMapping(value ="/form/{movieName}")
-    public String getCommentFind(@PathVariable("movieName") String movieName, Model model){
+    public String getCommentFind(@PathVariable("movieName") String movieName, Model model,Principal principal){
         log.info("댓글 쓰기 페이지 요청 ");
+        if(principal == null){
+            model.addAttribute("msg","로그인후 이용가능 합니다.");
+            return "users/login";
+        }
+
 
         MovieDTO movieDTO = movieService.nameOne(movieName);
         log.info(movieDTO);

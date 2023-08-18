@@ -3,6 +3,7 @@ package com.springboot.pople.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j2;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
+@Log4j2
 public class OrderMovie {
 
     @Id
@@ -33,12 +35,13 @@ public class OrderMovie {
 
     public static OrderMovie createOrderItem(Movie movie, int count,int price){
         OrderMovie orderItem = new OrderMovie();
-
+        log.info("총가격 나와라"+price);
+        
         orderItem.setMovie(movie);// 주문 상품 설정
         orderItem.setCount(count);// 주문 수량 설정
         orderItem.setOrderPrice(price);
-        orderItem.setOrderPrice(movie.getPrice());// 주문 가격 설정
-
+//        orderItem.setOrderPrice(movie.getPrice());// 주문 가격 설정
+        log.info("총가격 나와라22"+orderItem);
 //        item.removeStock(count); // 주문시 재고 수량 감소
 
         return orderItem;

@@ -27,5 +27,12 @@ public interface OrderRepository extends JpaRepository<Order, Long>, QuerydslPre
     @Query("select o from Order o where o.id = :orderId")
     Order userId(@Param("orderId") Long orderId);
 
+    //  ↑ 영화 관련
+    //  ↓  상품 관련
+
+
+
+
+
 
 }

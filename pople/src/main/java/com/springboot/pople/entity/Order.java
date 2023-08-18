@@ -41,6 +41,9 @@ public class Order {
             cascade = CascadeType.ALL) // 고객이 주문할 상품을 선택하고 주문할 때 주문 엔티티를 저장하면서 주문 상품 엔티티도 함께 저장되는 경우
     private List<OrderMovie> orderMovies = new ArrayList<>();
 
+
+
+
     public void addOrderItem(OrderMovie orderMovie){
         orderMovies.add(orderMovie);
         // 양방향 참조 주문 상품객체에 주문 객체을 설정
@@ -53,8 +56,10 @@ public class Order {
         Order order = new Order();
 
         order.setUsers(users);// 주문고객
-        for(OrderMovie orderItem : orderItemList){//주문상품
-            order.addOrderItem(orderItem);
+        for(OrderMovie orderMovie : orderItemList){//주문상품
+
+
+            order.addOrderItem(orderMovie);
         }
 
         order.setOrderStatus(OrderStatus.ORDER);// 주문상태
@@ -80,6 +85,7 @@ public class Order {
 //
 //        }
     }
+
 
 
 

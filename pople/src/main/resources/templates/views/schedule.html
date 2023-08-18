@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <link rel="stylesheet" href="../css/style.css">
 <title>예매 페이지</title>
     <style>
@@ -192,7 +193,11 @@ li{
 <!--                [[${cinema}]]-->
 <!--                <hr>-->
 <!--                [[${seat}]]-->
-                
+
+                <div>
+                    <img  th:src="${movie.movieImgDTOList[0].imgUrl}" style="width:300px;" class="rounded m-auto d-block" alt="" >
+
+                </div>
                 <!-- <div>
                     <div class="row">
                         //대표 이미지
@@ -257,7 +262,8 @@ li{
                 <input type="hidden" id="movieid" th:value="${movie.id}">
                 <input type="hidden" id="movieName" th:value="${movie.movieName}">
                 <input type="hidden" id="movieTime" th:value="${movie.movieTime}">
-                <input type="text" id="userid" sec:authorize="isAuthenticated()" th:value="${#authentication.principal.username}">
+                <input type="hidden" id="movieRating" th:value="${movie.movieRating}">
+                <input type="hidden" id="userid" sec:authorize="isAuthenticated()" th:value="${#authentication.principal.username}">
 
                 <li class="nav-item"  sec:authorize="isAuthenticated()"><span>[[${#authentication.principal.username}]]님</span> </li>
 
@@ -267,41 +273,133 @@ li{
                 <h5 class="card-header text-center">영화 예매 페이지 </h5>
                 <div class="card-body">
                     <div class="d-flex justify-content-center">
-                        <div >
-                            <label>상영시간</label>
-                            <select id="scheduleid" class="cinemaHeader" name="addrssY"  >
-                                <option >상영시간 선택</option>
-                                <option  th:value="${schedule.id}" th:each="schedule, status: ${schedule}">[[${schedule.startTime}]]==[[${schedule.dayTime}]]</option>
 
-                            </select>
+                        <div class="" id="region1">
+                            <div>
 
+                                <label for="addrssY1">지역선택</label>
+                                <select id="addrssY1" class="cinemaHeader" name="addrssY" >
+                                    <option  value=""  v-for="(item,key) in myObjArray":key='key'>{{item.name}}</option>
+
+                                </select>
+
+                                <label for="cinemaid">영화관선택</label>
+                                <select id="cinemaid" class="cinemaHeader" name="cinemaid" >
+                                    <option >영화관 선택</option>
+                                    <option  th:name="id" th:value="${cinema.cinemaid}" th:each="cinema, status: ${cinema}">[[${cinema.cinemaName}]]</option>
+
+                                </select>
+
+
+
+                            </div>
+
+                            <div  th:name="id"  th:each="crd, status: ${cid}">11</div>
+
+
+                            <div  id="tick">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">영화번호</th>
+                                    <th scope="col">영화제목</th>
+                                    <th scope="col">관람등급</th>
+                                    <th scope="col">상영관</th>
+                                    <th scope="col">상영시간</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td th:text="${movie.movieName}">범죄도시</td>
+                                    <td th:text="${movie.movieRating}">2D</td>
+                                    <td class="theater1" id="theater1">1관</td>
+                                    <input type="hidden" id="the1" value="">
+                                    <td  class="ss1">
+                                        <input type="radio" class="btn-check" name="scheduleDate" id="scheduleid" th:value="${schedule[0].id}" autocomplete="off" checked>
+                                        <label class="btn" for="scheduleid">[[${schedule[0].dayTime}]] <br> [[${schedule[0].startTime}]]</label>
+
+                                        <input type="radio" class="btn-check" name="scheduleDate" id="scheduleid2" th:value="${schedule[1].id}" autocomplete="off" >
+                                        <label class="btn" for="scheduleid2">[[${schedule[1].dayTime}]] <br> [[${schedule[1].startTime}]]</label>
+
+                                        <input type="radio" class="btn-check" name="scheduleDate" id="scheduleid3" th:value="${schedule[2].id}" autocomplete="off" >
+                                        <label class="btn" for="scheduleid3">[[${schedule[2].dayTime}]] <br> [[${schedule[2].startTime}]]</label>
+
+                                        <input type="radio" class="btn-check" name="scheduleDate" id="scheduleid4" th:value="${schedule[3].id}" autocomplete="off" >
+                                        <label class="btn" for="scheduleid4">[[${schedule[3].dayTime}]] <br> [[${schedule[3].startTime}]]</label>
+
+                                        <input type="radio" class="btn-check" name="scheduleDate" id="scheduleid5" th:value="${schedule[4].id}" autocomplete="off" >
+                                        <label class="btn" for="scheduleid5">[[${schedule[4].dayTime}]] <br> [[${schedule[4].startTime}]]</label>
+
+
+                                    </td>
+                                    <td>
+                                        <button id="seatBtn1" type="button" class="btn btn-outline-dark text-center" style="height: 30px;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            좌석표 보기
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+
+                                </tbody>
+                            </table>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">영화번호</th>
+                                    <th scope="col">영화제목</th>
+                                    <th scope="col">상영타입</th>
+                                    <th scope="col">상영관</th>
+                                    <th scope="col">상영시간</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td th:text="${movie.movieName}">범죄도시</td>
+                                    <td th:text="${movie.movieRating}">2D</td>
+                                    <td id="theater2" >2관</td>
+                                    <input type="hidden" id="the2">
+                                    <td  >
+                                        <input type="radio" class="btn-check shc1" name="options-base" id="scheduleSet1" th:value="${schedule[0].id}" autocomplete="off" checked>
+                                        <label class="btn" for="scheduleSet1">[[${schedule[0].dayTime}]] <br> [[${schedule[0].startTime}]]</label>
+
+                                        <input type="radio" class="btn-check shc1" name="options-base" id="scheduleSet2" th:value="${schedule[1].id}" autocomplete="off" >
+                                        <label class="btn" for="scheduleSet2">[[${schedule[1].dayTime}]] <br> [[${schedule[1].startTime}]]</label>
+
+                                        <input type="radio" class="btn-check shc1" name="options-base" id="scheduleSet3" th:value="${schedule[2].id}" autocomplete="off" >
+                                        <label class="btn" for="scheduleSet3">[[${schedule[2].dayTime}]] <br> [[${schedule[2].startTime}]]</label>
+
+                                        <input type="radio" class="btn-check shc1" name="options-base" id="scheduleSet4" th:value="${schedule[3].id}" autocomplete="off" >
+                                        <label class="btn" for="scheduleSet4">[[${schedule[3].dayTime}]] <br> [[${schedule[3].startTime}]]</label>
+
+                                        <input type="radio" class="btn-check shc1" name="options-base" id="scheduleSet5" th:value="${schedule[4].id}" autocomplete="off" >
+                                        <label class="btn" for="scheduleSet5">[[${schedule[4].dayTime}]] <br> [[${schedule[4].startTime}]]</label>
+
+
+                                    </td>
+                                    <td>
+                                        <button id="seatBtn2" type="button" class="btn btn-outline-dark text-center" style="height: 30px;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            좌석표 보기
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+
+                                </tbody>
+                            </table>
+                            </div>
 
                         </div>
 
 
-                        <label>지역선택</label>
-                        <select id="addrssY" class="cinemaHeader" name="addrssY" >
-                            <option  value="">양산</option>
 
-                        </select>
+<!--
 
-                        <label>영화관</label>
-                        <select id="cinemaid" class="cinemaHeader" name="cinemaid" >
-                            <option >영화관 선택</option>
-                            <option  th:name="id" th:value="${cinema.cinemaid}" th:each="cinema, status: ${cinema}">[[${cinema.cinemaName}]]</option>
 
-                        </select>
-
-                        <div class="d-flex" id="qqqq2">
-
-                        </div>
-                        <select id="qqqq" class="mx-2">
-                        </select>
-                        <button id="seatBtn" type="button" class="btn btn-outline-dark text-center" style="height: 30px;" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            좌석표 보기
-                        </button>
-
-<!--                            [[${theater}]]-->
+        [[${theater}]]-->
                     </div>
                     <div id="" class="d-flex justify-content-center">
 
@@ -328,10 +426,16 @@ li{
 
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button id="ticktingBtn"> 확인 </button>
+                            <button class="btn btn-outline-dark text-center" style="height:50px;" id="ticktingBtn"> 확인 </button>
                         </div>
 
+
+
+
+
                     </div>
+
+
 
 
 
@@ -356,6 +460,8 @@ li{
 
                     <div style="width:800px; height:400px;" id="map"></div>
                 </div>
+
+
 
 
 
@@ -404,22 +510,25 @@ li{
                                     </ul>
 
                                     <div class="seatContainer">
-                                        <div class="screen"></div>
+                                        <div class="screen">
+
+
+                                        </div>
                                         <div class=" row " id="setatBody">A
 
 
                                         </div>
                                         <div class="row">B
-                                            <span class="seat" id="seatid1B" value="1B" >1B</span>
-                                            <span class="seat" id="seatid2B" value="2B">2B</span>
-                                            <span class="seat" id="seatid3B" value="3B">3B</span>
-                                            <span class="seat" id="seatid4B" value="4B">4B</span>
-                                            <span class="seat" id="seatid5B" value="5B">5B</span>
-                                            <span class="seat" id="seatid6B" value="6B">6B</span>
-                                            <span class="seat" id="seatid7B" value="7B">7B</span>
-                                            <span class="seat" id="seatid8B" value="8B">8B</span>
-                                            <span class="seat" id="seatid9B" value="9B">9B</span>
-                                            <span class="seat" id="seatid10B" value="10B">10B</span>
+                                            <input type="checkbox" name="seat" class="seat" id="seatid1B" value="1B" >1B</input>
+                                            <input type="checkbox" name="seat" class="seat" id="seatid2B" value="2B" ></input>
+                                            <input type="checkbox" name="seat" class="seat" id="seatid3B" value="3B" ></input>
+                                            <input type="checkbox" name="seat" class="seat" id="seatid4B" value="4B" ></input>
+                                            <input type="checkbox" name="seat" class="seat" id="seatid5B" value="5B" ></input>
+                                            <input type="checkbox" name="seat" class="seat" id="seatid6B" value="6B" ></input>
+                                            <input type="checkbox" name="seat" class="seat" id="seatid7B" value="7B" ></input>
+                                            <input type="checkbox" name="seat" class="seat" id="seatid8B" value="8B" ></input>
+                                            <input type="checkbox" name="seat" class="seat" id="seatid9B" value="9B" ></input>
+                                            <input type="checkbox" name="seat" class="seat" id="seatid10B" value="10B" ></input>
                                         </div>
 
                                         <div class="row">C
@@ -523,6 +632,33 @@ li{
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script th:src="@{/js/cinema.js}"></script>
 <script layout:fragment="script"    th:inline="javascript">
+
+   var list = [
+                {name:'양산'},
+                {name:'부산'},
+                {name:'울산'},
+                {name:'김해'}
+        ];
+
+        
+
+
+
+new Vue({
+        el:'#region1',
+        data: {
+            myArray : ['부산','경남','경북'],
+            myObject : {name: 'A 학교',numbers :500},
+            myObjArray: list
+
+
+        }
+
+    });
+
+
+
+
  document.addEventListener('DOMContentLoaded', () =>{
 
 const seatContainer = document.querySelector('.seatContainer');
@@ -590,16 +726,6 @@ movie.addEventListener('change', (e) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
     $('#price').hide();
 
 
@@ -607,6 +733,12 @@ movie.addEventListener('change', (e) => {
         //$('#map').hide();
         $('#gBtn2').hide();
         $('#seatBtn').hide();
+        $('#seatBtn1').hide();
+        $('#seatBtn2').hide();
+        $('#tick').hide();
+
+
+
         $('#ticktingBtn').hide();
 
         $('#gBtn').click(function(){
@@ -712,12 +844,21 @@ movie.addEventListener('change', (e) => {
                 data:JSON.stringify(data), //매개변수
                 contentType: "application/json; charset=utf-8",
                  success: function(data) {
+                  var cid1 = data[0]["id"]
+                   var cid2 = data[1]["id"]
+                   var cid3 = data[0]["id"]
+                   var cid4 = data[1]["id"]
+
+                    console.log("fsdfsdfsd"+cid1);
+                    console.log(cid2);
                 
+
                     for(var i = 0; i < data.length; i++){
                     console.log(data[i]);
                     const id = data[i].id;
                     var cid = data[i]["id"]
                         console.log(cid);
+                        /*
                          //var r = "<select  class=''  >";
                            var r= "<option "
                            r += "value="+cid
@@ -728,16 +869,21 @@ movie.addEventListener('change', (e) => {
 
                           // r+= "</select>";
 
-
-
-
                              var r2 = "<input type='hidden'"
                                 r2 += "value="+data[i].id
 
                                 r2 += ">"
+                                */
 
-                       $("#qqqq").append(r);
-	   	            $("#qqqq2").append(r2);
+
+
+                    // $("#qqqq").append(cid3);
+<!--	   	           $("#qqqq2").append(r2);-->
+
+	   	             $("#theater1").text(cid1);
+	   	            $("#theater2").text(cid2);
+	   	             $("#the1").val(cid3);
+                    $("#the2").val(cid4);
 
 	            }
 
@@ -750,10 +896,11 @@ movie.addEventListener('change', (e) => {
 
                 }
             }) //end
+            $('#tick').show();
 
            })
 
-        $('#qqqq').change(function(){
+           $('#qqqq').change(function(){ // 삭제 예정
             var qqqq = $('#qqqq').val()
             console.log(qqqq);
 
@@ -799,11 +946,71 @@ movie.addEventListener('change', (e) => {
 
                 }
             }) //end
-            $('#seatBtn').show();
+            $('#seatBtn1').show();
+
+
+
+        }) // end
+
+        $("input[name='scheduleDate']").change(function(){
+            var the1 = $('#the1').val()
+            console.log(the1);
+
+            var data = {
+                theaterid : $('#the1').val()
+
+                };
+
+                $.ajax({  //페이지가 아닌 데이터만 보내기
+                type: "POST",
+                async: true, //true=비동기
+                url: "/schedule/theaterid",
+               // dataType : "json", //서버로부터 받은 데이터 타입
+                data:JSON.stringify(data), //매개변수
+                contentType: "application/json; charset=utf-8",
+                 success: function(data) {
+                           //var lain = "<label class='mx-1'>"
+                             //   lain += data[1].seatLineNo
+                             // lain+=  "</label>"
+                   // $("#setatBody").append(lain);
+                    for(var i = 0; i < data.length; i++){
+                        var seatNo = data[i].seatNo
+                        var seatBtn = "seatBtn";
+                        console.log(data[i])
+
+                            
+                        var r =  "<input type='checkbox' name='seat' class='seat' "
+                           
+                            r += "id="+seatBtn+seatNo
+                            r += "value="
+                            r+= seatNo
+                            r +=  ">"
+
+
+                        $("#setatBody").append(r);
+	                    }
+                        $('#seatBtn1').show();
+                      },
+                error: function(){
+
+                },
+                complete : function(){
+
+                }
+            }) //end
+
+
 
 
 
         })
+
+
+
+
+
+
+
 $(function(){
         $('#DBtn').click(function(){
            console.log("예매하기")
@@ -821,12 +1028,12 @@ $(function(){
             var count = $('#count').val(); // 인원수
             var costs = $('#costs').val(); // 가격
             var cinemaid = $('#cinemaid').val();
-            var theaterid = $('#qqqq').val()
+            var theaterid = $('#the1').val()
             var movieid = $('#movieid').val();
             var movieName = $('#movieName').val();
             var movieTime = $('#movieTime').val();
-            var scheduleid = $('#scheduleid').val();
-
+<!--            var scheduleid = $('#scheduleid').val();-->
+            var scheduleid = $('input[name="scheduleDate"]:checked').val();
 
              console.log(count)
             console.log(costs)
@@ -842,12 +1049,13 @@ $(function(){
             count : $('#count').val(),
             costs : $('#costs').val(),
             cinemaid : $('#cinemaid').val(),
-            theaterid : $('#qqqq').val(),
-            movieid : $('#movieid').val(),
+            theaterid : $('#the1').val(),
+         <!-- movieid : $('#movieid').val(),-->
             movieName : $('#movieName').val(),
             movieTime : $('#movieTime').val(),
             userName : $('#userid').val(),
-            scheduleid : $('#scheduleid').val()
+            scheduleid : scheduleid,
+            movieRating : $('#movieRating').val()
 
             };
 
@@ -868,11 +1076,11 @@ $(function(){
                 error:function(jqXHR, status, error){
                         if(jqXHR.status == '401'){
                         alert('로그인 후 이용해주세요');
-                        location.href='/users/login';
+                   location.href='/users/login';
                     } else{
-                        alert(jqXHR.responseText);
+<!--                        alert(jqXHR.responseText);-->
                         alert('로그인 후 이용해주세요');
-                        location.href='/users/login';
+                       location.href='/users/login';
                     }
 
                 },

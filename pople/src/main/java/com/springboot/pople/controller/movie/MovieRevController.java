@@ -9,12 +9,14 @@ import com.springboot.pople.service.movie.MovieService;
 import com.springboot.pople.service.movierev.MovieRevService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.HashMap;
 
 @Log4j2
@@ -31,8 +33,14 @@ public class MovieRevController {
 
 
     @GetMapping(value ="/form/{movieName}")
-    public String getCommentFind(@PathVariable("movieName") String movieName, Model model){
+    public String getCommentFind(@PathVariable("movieName") String movieName, Model model, Principal principal){
         log.info("리뷰 쓰기 페이지 요청 ");
+
+        if(principal == null){
+            model.addAttribute("msg","로그인후 이용가능합니다.");
+            return "/users/login";
+        }
+
 
         MovieDTO movieDTO = movieService.nameOne(movieName);
         log.info(movieDTO);
@@ -78,6 +86,8 @@ public class MovieRevController {
     @GetMapping(value ="/find/{revid}")
     public String getComment(@PathVariable("revid") Long revid, Model model){
         log.info("댓글 쓰기 페이지 요청 ");
+
+
 
         MovieRevFormDTO movieRevFormDTO =  movieRevService.readOne(revid);
 

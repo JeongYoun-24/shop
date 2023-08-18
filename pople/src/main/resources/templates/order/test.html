@@ -32,7 +32,7 @@
                     <h5 class="card-title"></h5>
 
                     <!-- Item list content -->
-                     [[${orders.getContent()}]]
+<!--                     [[${orders.getContent()}]]-->
 
                     <div th:each="tickting: ${orders.getContent()}"
                          class="mt-3 d-flex justify-content-center" >
@@ -101,18 +101,18 @@
 
                                 <li class="page-item" th:classappend="${orders.number eq 0} ? 'disabled' ">
                                     <a class="page-link"
-                                       th:href="@{'/tickting/orders/'+${orders.number-1}}">Previous</a>
+                                       th:href="@{'/tickting/tick/'+${orders.number-1}}">Previous</a>
                                 </li>
 
                                 <li class="page-item" th:each="page : ${#numbers.sequence(start, end)}"
                                     th:classappend="${orders.number eq page-1} ? 'active ' : '' ">
                                     <a class="page-link"
-                                       th:href="@{'/tickting/orders/'+${page-1}}" >[[${page}]]</a>
+                                       th:href="@{'/tickting/tick/'+${page-1}}" >[[${page}]]</a>
                                 </li>
 
                                 <li class="page-item" th:classappend="${orders.number+1 ge orders.totalPages} ? 'disabled' ">
                                     <a class="page-link"
-                                       th:href="@{'/tickting/orders/'+${orders.number+1}}">Next</a>
+                                       th:href="@{'/tickting/tick/'+${orders.number+1}}">Next</a>
                                     </a>
                                 </li>
                             </ul>

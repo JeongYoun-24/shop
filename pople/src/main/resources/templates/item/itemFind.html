@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/layout2}">
+
+
+<div layout:fragment="content" class="m-3 p-3">
+
+	<!-- 리스트 -->
+	<div class="row mt-3">
+		<div class="col">
+
+			<div class="card">
+				<h5 class="card-header">영화 상세 페이지 </h5>
+				<div class="card-body">
+
+					<h5 class="card-title">영화 이미지 </h5>
+
+					<!-- Item list content -->
+					<div class="row">
+						<!-- 대표 이미지 -->
+						<div class="col-md-4">
+							<div th:each="itemImg, status: ${item.ItemImgDTOList}">
+
+								<img  th:src="${itemImg.imgUrl}" style="width:300px;" class="rounded m-auto d-block" alt="" >
+
+							</div>
+
+						</div>
+						<div class="col-md-2"></div>
+
+
+						<div class="col-md-5">
+							<!-- 판매 상태 -->
+							<span th:if="${item.itemSellStatus == T(com.springboot.pople.constant.ItemSellStatus).SELL}">개봉</span>
+							<span th:unless="${item.itemSellStatus == T(com.springboot.pople.constant.ItemSellStatus).SOLD_OUT}">미개봉 </span>
+							<div class="h4" th:text="${item.itemName}"></div>
+							<hr class="my-4">
+							<!--가격및 재고량 -->
+							<div>
+								<div>
+									<input type="hidden" th:value="${item.id}" id="itemid" name="itemid" class="form-control">
+									<input type="hidden" id="itemName" th:value="${item.itemName}">
+								</div>
+								<div>
+
+								</div>
+							</div>
+							<hr class="my-4">
+							<div class="text-right  d-flex ">
+								<h5>가격</h5>
+								<hr class="">
+								<span class="mx-3"> [[${#numbers.formatInteger(item.price,3,'COMMA')}]] </span>
+							</div>
+							<div>
+
+							</div>
+
+							<hr class="my-4">
+							<div class="text-right  d-flex ">
+								<h5>수량</h5>
+								<hr class="">
+								<div class="d-flex">
+									<div class="d-flex">
+										<button id="minus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+											<path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"/>
+										</svg>
+										</button>
+									</div>
+									<div class="d-flex">
+										<input type="number" style="width:50px;"  id="itemqty" value="1" readonly>
+
+									</div>
+
+
+									<div class="d-flex">
+										<button id="plus"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+											<path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+										</svg>
+										</button>
+									</div>
+
+								</div>
+
+								<input type="hidden" id="price" th:value="${item.price}">
+									<p class="mx-2">총금액<span class="mx-5"  id="total" >[[${#numbers.formatInteger(item.price,3,'COMMA')}]]</span>원</p>
+							</div>
+
+							<div class="mt-5  d-flex justify-content-end">
+
+								<button id="cartbtn" style="width:300px; font-size:50px " onclick="cartbtn()" class="btn btn-dark mx-3">장바구니</button>
+								<button id="itembtn" style="width:300px; font-size:50px " onclick="itembtn()" class="btn btn-dark">구매하기</button>
+
+							</div>
+
+						</div>
+
+
+						<hr class="my-4">
+
+
+					</div>
+					<!-- 영화줄거리 설명 -->
+					<div class="container">
+						<h4 class="display-3">상품 설명 </h4>
+						<hr class="my-4">
+						<p class="lead" th:text="${item.itemDetail}"></p>
+
+						<div>
+							<div>
+								<button></button>
+							</div>
+							<div>
+								<div class="d-flex">
+
+
+								</div>
+
+							</div>
+						</div>
+
+
+
+					</div>
+
+
+
+
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+</div>
+
+
+
+
+<script layout:fragment="script"    th:inline="javascript">
+  function calculateTotalPrice(){
+            var count = document.querySelector('#itemqty').value;
+            var price = document.querySelector('#price').value;
+            var totalPrice = price * count;
+
+            console.log(count, price, totalPrice)
+
+            document.querySelector('#total').innerHTML=totalPrice
+        }
+
+
+$(function(){
+	$('#minus').click(function(){
+	console.log("클릭")
+	var number = $('#itemqty').val();
+
+	if(number <= 0){
+		alert("최소구매 1개 구매가능합니다.")
+
+	}else{
+	$('#itemqty').val(Number(number)-1);
+	}
+
+
+	var qty = $('#itemqty').val();
+	var price =$('#price').val();
+	var total = qty * price;
+	console.log(total)
+
+	$('#total').text(total)
+
+	})
+	$('#plus').click(function(){
+	var number = $('#itemqty').val();
+
+	if(number >10){
+		alert("최대 10개까지 구매가능합니다.")
+		$('#itemqty').val(Number(10) );
+	}else{
+	$('#itemqty').val(Number(number)+1);
+	}
+	var qty = $('#itemqty').val();
+	var price =$('#price').val();
+	var total = qty * price;
+	console.log(total)
+
+	$('#total').text(total);
+
+	})
+
+})
+
+<!-- 장바구니 -->
+function cartbtn(){
+<!--            var token = $("meta[name='_csrf']").attr("content");-->
+<!--            var header = $("meta[name='_csrf_header']").attr("content");-->
+
+            var url = "/item/cart";
+            var paramData = {
+                itemId : $("#itemid").val(),
+                count : $("#itemqty").val()
+            };
+
+            var param = JSON.stringify(paramData);
+
+            $.ajax({
+                url      : url,
+                type     : "POST",
+                contentType : "application/json",
+                data     : param,
+<!--                beforeSend : function(xhr){-->
+<!--                    //  데이터를 전송하기 전에 헤더에 csrf값을 설정-->
+<!--                    xhr.setRequestHeader(header, token);-->
+<!--                },-->
+                dataType : "json",
+                cache   : false,
+                success  : function(result, status){
+                    alert("장바구니에 저장 되었습니다.");
+                    location.href='/main';
+                },
+                error : function(jqXHR, status, error){
+
+                    if(jqXHR.status == '401'){
+                        alert('로그인 후 이용해주세요');
+                        location.href='/users/login';
+                    } else{
+                        alert('로그인 후 이용해주세요');
+                        location.href='/users/login';
+                    }
+
+                }
+            });
+        }
+
+<!-- 구매하기 -->
+function itembtn(){
+<!--            var token = $("meta[name='_csrf']").attr("content");-->
+<!--            var header = $("meta[name='_csrf_header']").attr("content");-->
+
+            var url = "/item/order";
+            var paramData = {
+                itemId : $("#itemid").val(),
+                count : $("#itemqty").val()
+            };
+
+            var param = JSON.stringify(paramData);
+
+            $.ajax({
+                url      : url,
+                type     : "POST",
+                contentType : "application/json",
+                data     : param,
+<!--                beforeSend : function(xhr){-->
+<!--                    //  데이터를 전송하기 전에 헤더에 csrf값을 설정-->
+<!--                    xhr.setRequestHeader(header, token);-->
+<!--                },-->
+                dataType : "json",
+                cache   : false,
+                success  : function(result, status){
+                    alert("주문이 완료 되었습니다.");
+                    location.href='/main';
+                },
+                error : function(jqXHR, status, error){
+
+                    if(jqXHR.status == '401'){
+                        alert('로그인 후 이용해주세요');
+                        location.href='/users/login';
+                    } else{
+                       alert('로그인 후 이용해주세요');
+                        location.href='/users/login';
+                    }
+
+                }
+            });
+        }
+
+
+
+
+    </script>
+<style  layout:fragment="css"       th:inline="css">
+        .clearBtn {
+            margin-left: 0.3em;
+        }
+
+        .pagination a {
+            cursor: pointer;
+        }
+        .btn-outline-dark:hover{
+
+        }
+
+
+    </style>
+</html>

@@ -21,7 +21,7 @@ public class MovieImgService {
 
 //    @Value("${org.zerock.upload.path}")
 //    private String itemImgLocation;
-    @Value("${itemImgLocation}")
+    @Value("${movieImgLocation}")
     private String itemImgLocation;
 
     private final MovieImgRepository movieImgRepository;

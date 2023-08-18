@@ -25,4 +25,7 @@ public class OrderDTO {
     private OrderStatus orderStatus;// 주문상태
 
 
+
+
+
 }

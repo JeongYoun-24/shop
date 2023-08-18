@@ -1,5 +1,6 @@
 package com.springboot.pople.service.movie;
 
+import com.springboot.pople.dto.MovieDTO;
 import com.springboot.pople.dto.movie.MainMovieDTO;
 import com.springboot.pople.dto.movie.MovieFormDTO;
 
@@ -38,7 +39,7 @@ public class MovieService2 {
 
 //    @Value("${org.zerock.upload.path}")
 //    private String movieImgLocation;
-    @Value("itemImgLocation}")
+    @Value("movieImgLocation}")
     private String movieImgLocation;
 
     public Long saveMovie(
@@ -142,5 +143,37 @@ public class MovieService2 {
 
         return movieRepository.getMainItemPage(movieSearchDTO,pageable);
     }
+
+    public List<MovieDTO> movieNameList(String movieName){
+        List<Movie> movieList = movieRepository.findByMovieNameList(movieName);
+        log.info(movieList);
+        List<MovieDTO> movieDTOList = new ArrayList<>();
+        for(Movie movie: movieList){
+            MovieDTO movieImgDTO = MovieDTO.of(movie);// entity->dto 메서드호출
+            movieDTOList.add(movieImgDTO);
+            MovieImg  movieImg2= movieImgRepository.findByMovie_MovieidAndRepImgYn(movieImgDTO.getMovieid(),"Y");
+        
+            List<MovieImg> movieImgList = movieImgRepository.findByMovie_MovieidOrderByIdAsc(movieImgDTO.getMovieid());
+
+            List<MovieImgDTO> movieImgDTOList = new ArrayList<>();
+
+                MovieImgDTO movieImgDTO2 = MovieImgDTO.of(movieImg2);// entity->dto 메서드호출
+                movieImgDTOList.add(movieImgDTO2);
+
+                movieImgDTO.setImgUrl(movieImgDTO2.getImgUrl());
+
+
+            log.info(movieImgDTOList);
+
+
+        }
+
+        log.info(movieDTOList);
+        return movieDTOList;
+    }
+
+
+
+
 
 }
