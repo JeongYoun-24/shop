@@ -1,5 +1,6 @@
 package com.springboot.pople.service.cart;
 
+import com.springboot.pople.dto.OrderDTO2;
 import com.springboot.pople.dto.OrderHistDTO2;
 import com.springboot.pople.dto.OrderItemDTO;
 import com.springboot.pople.dto.item.CartDetailDTO;
@@ -21,8 +22,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +62,7 @@ public class CartService {
         }
         // 현재 상품이 장바구니에 있는 조회
         CartItem saveCartItem = cartItemRepository.findByCartIdAndItemId(cart.getId(),item.getId());
+
         log.info("ssss"+saveCartItem);
         if(saveCartItem != null){
             // 장바구니에 이미 있던 상품일 경우 기존 수량에 현재 장바구니에 담을 수량 만큼을 더해 준다
@@ -72,6 +76,91 @@ public class CartService {
         }
 
     }
+
+    // 현재 로그인한 회원의 정보를 이용하여 장바구니에 들어 있는 상품을 조회하는 로직
+    @Transactional(readOnly = true)
+    public List<CartDetailDTO> getCartList(String name){
+        List<CartDetailDTO> cartDetailDTOList = new ArrayList<>();
+
+        // 현재 로그인한 회원의 장바구니 엔티티 조회
+        Users users = usersRepository.findByName(name);
+        Cart cart = cartRepository.findByUsers_Userid(users.getUserid());
+
+        // 장바구니에 상품을 한 번도 안 담았을 경우 장바구니 엔티티가 빈리스트로 반환
+        if (cart == null){
+            return cartDetailDTOList;
+        }
+
+        // 장바구니에 담겨있는 상품정보 조회
+        cartDetailDTOList = cartItemRepository.findCartDetailDTOList(cart.getId());
+
+        return cartDetailDTOList;
+    }
+
+    // 장바구니 수정 권한을 체크
+    @Transactional(readOnly = true)
+    public boolean validateCartItem(Long cartItemId, String name){
+        // 현재 로그인 회원 조회
+        Users curUsers = usersRepository.findByName(name);
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(EntityNotFoundException::new);
+        // 장바구니 상품을 저장한 회원 조회
+        Users saveUsers = cartItem.getCart().getUsers();
+
+        // 로그인 회원과 장바구니 회원이 다를 경우 false반환
+        if (!StringUtils.equals(curUsers.getUserid(), saveUsers.getUserid())){
+            return false;
+        }
+        return true;
+
+    }
+    // 장바구니 상품 수량을 업데이트하는 메서드
+    public void updateCartItemCount(Long cartItemId, int count){
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(EntityNotFoundException::new);
+        cartItem.updateCount(count);
+    }
+
+
+    // 장바구니에서 상품 삭제(상품번호를 파라미터로 받아서 삭제하는)메서드
+   /* public void deleteCart(Long cartItemId){
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        cartItemRepository.delete(cartItem);
+    }
+    public Long orderCart(List<?> cartItemList,String name){
+        List<OrderDTO2> orderDTO2List =new ArrayList<>();
+
+        for(CartOrderDTO cartOrderDTO :cartItemList ){
+            CartItem cartItem = cartItemRepository.findById(cartOrderDTO.getCartItemId)
+                    .orElseThrow(EntityNotFoundException::new);
+
+            OrderDTO2 orderDTO2 = new OrderDTO2();
+            orderDTO2.setItemId(cartItem.getItem().getId());
+            orderDTO2.setCount(cartItem.getCount());
+            orderDTO2List.add(orderDTO2);
+        }
+
+        Long orderId = orderService.orders(orderDTO2List,name);
+        for(CartOrderDTO cartOrderDTO : orderDTO2List){
+            CartItem cartItem = cartItemRepository.findById(cartOrderDTO.getCartItemId)
+                    .orElseThrow(EntityNotFoundException::new);
+
+            cartItemRepository.delete(cartItem);
+
+        }
+
+
+        return orderId;
+    }*/
+
+
+
+
+
+
+
 
 //    // 현재 로그인한 회원의 정보를 이용하여 장바구니에 들어있는 삼품을 조회 하는 로직
 //    @Transactional(readOnly = true)

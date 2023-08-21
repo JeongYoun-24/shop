@@ -41,6 +41,7 @@ public class CartItem {
         cartItem.setCart(cart);
         cartItem.setItem(item);
         cartItem.setCount(count);
+        cartItem.setRegDate(LocalDateTime.now());
 
         return cartItem;
     }

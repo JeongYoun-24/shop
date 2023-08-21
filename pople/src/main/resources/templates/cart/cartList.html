@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout2}">
+
+    <!-- csrf설정을 비활성화되었으면 아래부분 주석 처리 할 것 -->
+    <!-- <head>
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    </head>  -->
+
+    <div layout:fragment="content" class="m-3 p-3">
+
+        <!-- 리스트 -->
+        <div class="row mt-3">
+            <div class="col">
+
+                <div class="card">
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="/orders">구매내역</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="/tickting/tick">예매내역</a>
+                        </div>
+
+                    </div>
+
+                    <h5 class="card-header my-3">장바구니</h5>
+
+                    <div class="card-body">
+
+                        <h5 class="card-title"></h5>
+
+                        <!-- Item list content -->
+<!--                         [[${cartItems}]]-->
+
+                        <table class="table">
+                            <colgroup>
+                                <col width="15%">
+                                <col width="70%">
+                                <col width="15%">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th scope="cole">
+                                    <input type="checkbox" class="form-check-input mx-1" id="checkall" onClick="checkAll()">전체 선택
+                                </th>
+                                <th scope="col">상품 정보</th>
+                                <th scope="col">상품 금액</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                            <tr th:each="cartItem : ${cartItems}">
+                                <th  class="text-center align-middle">
+                                    <input type="checkbox" name="cartChkBox"  class="form-check-input mx-1"
+                                            th:value="${cartItem.id}"
+                                            th:id="'cartChkBox_'+${cartItem.id}">
+                                            
+                                </th>
+                                <td>
+                                    <div class="card mb-3">
+                                        <div class="row g-0">
+                                            <div class="col-md-4 px-1 d-flex justify-content-center align-items-center">
+                                                <img  th:src="${cartItem.imgUrl}" th:alt="${cartItem.itemName}">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">[[${cartItem.itemName}]]</h5>
+                                                    <p class="card-text">[[${cartItem.itemDetail}]]</p>
+                                                    <p class="card-text">
+                                                        <span class="input-group ">
+                                                            <span th:id="'price_'+${cartItem.id}"
+                                                                  th:data-price="${cartItem.price}"
+                                                                  th:text="${cartItem.price}+'원'"></span>
+                                                            <span>
+                                                                <input type="number" name="count"
+                                                                       th:id="'count_'+${cartItem.id}"
+                                                                        th:value="${cartItem.count}" min="1"
+                                                                        onchange="changeCount(this)"
+                                                                        >
+                                                                <button type="button"  class="btn  btn-outline-dark">
+                                                                    <span th:data-id="${cartItem.id}" th:id="'count_'+${cartItem.id}" onclick="deleteCartItem(this)">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+                                                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                                                        </svg>
+                                                                        삭제
+                                                                    </span>
+                                                                </button>
+                                                            </span>
+                                                        </span>
+                                                    </p>
+                                                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td valign="middle">
+                                    <div th:id="'totalPrice_'+${cartItem.id}"
+                                         th:text="${cartItem.price*cartItem.count}+'원'"
+                                        name="totalPrice"
+                                    >[[${cartItem.price}]]</div>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                        <!-- 총 금액 & 주문하기-->
+                        <div class="alert alert-danger" role="alert">
+                           총 주문 금액 : <span id="orderTotalPrice">0원</span>
+                        </div>
+                        <div>
+                            <button type="button" class="btn  btn-outline-dark"
+                                    onClick="orders()">주문하기</button>
+                        </div>
+
+
+
+
+                        <!-- 페이징 : 현재 보여지는 페이지가  어느 페이지블럭(페이지번호범위)에 속하는지 계산처리하여 저장-->
+                        <!-- pageable객체속성중 number : 현재 페이지 번호 : 0부터 시작 n-1번째 까지 -->
+                        <!-- start=(현재페이지 번호/보여줄 페이지수)*보여줄 페이지수+1 => 0~4사이면 => 1 -->
+                        <!-- end=start+(보여줄 페이지수 - 1) -->
+
+            <!--   <div th:with="start=${(orders.number/maxPage)*maxPage+1},end=(${orders.totalPages == 0 ? 1 : ( start + (maxPage-1) < orders.totalPages ? start + (maxPage-1):orders.totalPages)})" class="mt-3">
+
+                            <nav aria-label="Page navigation example justify-content-end align-items-center">
+                                <ul class="pagination justify-content-end " >
+
+
+                                    <li class="page-item" th:classappend="${orders.number eq 0} ? 'disabled' ">
+                                        <a class="page-link"
+                                            th:href="@{'/orders/'+${orders.number-1}}">Previous</a>
+                                    </li>
+
+                                    <li class="page-item" th:each="page : ${#numbers.sequence(start, end)}"
+                                                          th:classappend="${orders.number eq page-1} ? 'active ' : '' ">
+                                        <a class="page-link"
+                                        th:href="@{'/orders/'+${page-1}}" >[[${page}]]</a>
+                                    </li>
+
+                                    <li class="page-item" th:classappend="${orders.number+1 ge orders.totalPages} ? 'disabled' ">
+                                        <a class="page-link"
+                                            th:href="@{'/orders/'+${orders.number+1}}">Next</a>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>-->
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- 상품 주문 취소 axios처리(비동기 호출 처리 하는 자바스크립트)-->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script th:src="@{/js/order.js}"></script>
+    </div>
+
+
+
+
+    <script layout:fragment="script"    th:inline="javascript">
+        var checkItems = document.querySelectorAll('input[name=cartChkBox]')
+        console.log('전체 체크항목 개수:'+checkItems.length)
+
+
+        // 장바구니에 상품항목 체크여부에 따른 총금액 계산처리
+        for (let checkItem of checkItems){
+            checkItem.addEventListener('change', (e) => {
+                let item = e.target
+                console.log(item.getAttribute('id')+"=>"+item.checked)
+                
+                getorderTotalPrice() // 총 주문 금액을 구하는 함수 호출
+            })
+
+        }
+
+        // 총 주문 금액을 구하는 함수 => 체크된 항목만 총금액 계산처리
+        function getorderTotalPrice(){
+            let orderTotalPrice = 0
+            
+            var isCheckItems = document.querySelectorAll('input[name=cartChkBox]:checked')
+            console.log('checked item count:'+isCheckItems.length)
+
+            // 전체 체크항목 수와 체크된 항목수가 동일하면 전체체크항목을 체크로 설정
+            if (isCheckItems.length == checkItems.length){
+                document.querySelector('#checkall').checked = true
+            } else {
+                document.querySelector('#checkall').checked = false
+            }
+
+            for (let isCheckItem of isCheckItems){
+                let cartItemId = isCheckItem.value
+
+                console.log("===")
+                console.log('체크한 상품id: '+cartItemId)
+
+                var price = document.querySelector('#price_'+id).getAttribute('data-price')
+                console.log('체크한 상품 가격: '+price)
+
+                var count = document.querySelector('#count_'+id).value
+                console.log('체크한 상품 가격: '+count)
+
+                orderTotalPrice += (price*count)
+
+            }
+            document.querySelector('#orderTotalPrice').innerHTML = orderTotalPrice+'원'
+
+        }
+
+
+        // 전체 항목체크시
+        function checkAll(){
+            var checkAll = document.querySelector('#checkall')
+            checkAll.addEventListener('change',()=>{
+                if (checkAll.checked){
+                    // 항목 전체를 체크상태로 설정
+                    for(let item of checkItems){
+                        item.checked = true
+                    }
+                    // 전체 항목 선택후 총금액계산
+                    getorderTotalPrice()
+                } else {
+                    // 항목 전체를 체크해제상태로 설정
+                    for(let item of checkItems){
+                        item.checked = false
+                    }
+                    // 전체 항목 선택후 총금액계산
+                    getorderTotalPrice()
+                }
+            })
+        }
+
+
+
+        // -----------------------------------------------------------------------------//
+        // axios 처리하는 함수정의 : 외부파일 인크루드가 잘 되는 경우 직접 작성 
+        // -----------------------------------------------------------------------------//
+        // 장바구니 수량이 변동시 비동기처리
+        async function updateCartItemcount(id, count){
+            const response = await axios.patch('/cartItem/'+id+'?count='+count)
+
+            console.log("요청 응답 결과:"+response.data)
+            //return response.data;
+            return response;
+        }
+
+        // 장바구니 상품 주문처리시 비동기 처리
+        async function cartItem(orderItemData){
+            const response = await axios.post('/cart', orderItemData)
+
+            console.log("요청 응답 결과:"+response.data)
+            //return response.data;
+            return response;
+        }
+        // 장바구니 상품 주문취소시 비동기 처리
+        async function cancelOrderId(id){
+            const response = await axios.post('/Delete/'+id)
+
+            console.log("요청 응답 결과:"+response.data)
+            // return response.data; 
+            return response;
+        }
+        // -----------------------------------------------------------------------------//
+
+
+
+        function changeCount(object) {
+            alert('상품수량이 변경되었습니다.')
+            console.log("수량변동: "+object.value)
+
+            let count = object.value
+            let cartItemId = object.id.split('_')[1] // 주문상품 id추출
+            let price = document.querySelector('#price_'+cartItemId).getAttribute('data-price')
+            let totalPrice = count*price
+
+            console.log(cartItemId,count,price,totalPrice)
+
+            document.querySelector('#totalPrice_'+cartItemId).innerHTML = totalPrice+'원'
+            
+            // 비동기 처리 요청 (상품 수량만 서버에 요청)
+            updateCartItemcount(cartItemId, count)
+                .then( (result) => {                       
+                    console.log("success code: "+e.response.status)
+                })
+                .catch((e)=>{
+                    //console.log("error code:" +e)
+                })
+            
+        }
+        function deleteCartItem(object){
+         let cartItemId = object.id.split('_')[1] // 주문상품 id추출
+        console.log(cartItemId)
+        alert('장바구니에서 상품을 취소 하였습니다.')
+
+         cancelOrderId(cartItemId)
+                .then( (result) => {
+                    console.log("success code: "+e.response.status)
+                })
+                .catch((e)=>{
+                    //console.log("error code:" +e)
+                })
+
+
+        }
+        function orders(){
+            alert('상품을 주문 하였습니다.')
+        }
+
+
+
+        function cancelOrder(orderId){
+            // let _csrf = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+			// let _csrf_header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+            
+            console.log('주문취소 버튼...')
+            console.log("orderId: "+orderId)
+            
+            const orderIdData = {
+                orderId: orderId
+            }
+            
+            // "/js/order.js"에 있는 함수 
+            
+            cancelOrderId(orderIdData)
+                    .then((result) => {
+                        console.log("result =>")
+                        console.log(result)
+                        console.log("result.data=>")
+                        console.log(result.data)
+                        
+                        alert("주문이 취소 되었습니다.")
+                        location.href="/orders/"+[[${page}]]
+
+                    })
+                    .catch(e => {
+                        console.log(e)
+                        if (e.response.status == "500"){
+                            alert('로그인 후 이용해 주세요')
+                            location.href="/users/login";
+                        } else {
+                            alert("error code: "+e.response.status+"\n"+ e.response.data)
+                        }
+                        
+                    })
+               
+            
+
+        }
+
+
+    </script>
+    <style  layout:fragment="css"       th:inline="css">
+        .clearBtn {
+            margin-left: 0.3em;
+        }
+        
+        .pagination a {
+            cursor: pointer;
+        }
+
+    </style>
+</html>
+
+<!--
+pageable이 가지고 있는 속성
+
+    int getNumber();                    //현재 페이지
+    int getSize();                      //페이지 크기
+    int getTotalPages();                //전체 페이지 수
+    int getNumberOfElements();   		//현재 페이지에 나올 데이터 수
+    long getTotalElements();          	//전체 데이터 수
+    boolean hasPreviousPage();     		//이전 페이지 여부
+    boolean isFirstPage();              //현재 페이지가 첫 페이지 인지 여부
+    boolean hasNextPage();            	//다음 페이지 여부
+    boolean isLastPage();               //현재 페이지가 마지막 페이지 인지 여부
+    Pageable nextPageable();          	//다음 페이지 객체, 다음 페이지가 없으면 null
+    Pageable previousPageable();    	//다음 페이지 객체, 이전 페이지가 없으면 null
+    List<T> getContent();               //조회된 데이터
+    boolean hasContent();               //조회된 데이터 존재 여부
+    Sort getSort();                     //정렬정보
+
+Thymeleaf T() 기능 및 사용법
+    타임리프에서 POJO 정적 속성(변수)에  접근
+    스프링을 쓰고 있다면, 타임리프는 스프링이 제공하는 EL 표현식에 접근 가능
+    즉, 스프링을 사용하고 있을 때, Thymeleaf 에서 T() 를 사용하면 스프링 프로젝트 내에 존재하는 클래스에 접할 가능
+
+객체일 경우
+    last : 마지막 페이지인지
+    totalElements : DB의 전체 데이터 개수
+    totlaPages : 만들수 있는 page수
+    size : 페이지당 나타낼수 있는 데이터 개수
+    number : 현재 페이지 번호
+    sort : 정렬 정보
+    first : 첫번째 페이지 인지
+    numberOfElements : 실제 데이터 개수
+    empty : 리스트가 비어있는지 여부
+
+-->

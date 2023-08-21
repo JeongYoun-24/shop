@@ -1,37 +1,35 @@
 package com.springboot.pople.dto.item;
 
-import com.springboot.pople.dto.OrderItemDTO;
-import com.springboot.pople.entity.CartItem;
-import com.springboot.pople.entity.Order2;
-import com.springboot.pople.entity.OrderItem;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @ToString
-public class CartDetailDTO { // 장바구니 조회 페이지에 전달할 DTO
+public class OrderDetailDTO { // 장바구니 조회 페이지에 전달할 DTO
 
-    private Long id;    // 장바구니 상품 아이디
+    private Long id;    // 주문 상품 아이디
     private String itemName;      // 상품이름
     private int price;              // 상품 가격
     private String itemDetail;      // 상품 정보
     private int count;          // 상품 수량
     private String imgUrl;      // 상품 이미지 경로
+    private LocalDateTime regDate;
 
     // 장바구니 페이지에 전달할 데이터를 생성자의 파라미터로 만들어준다
-    public CartDetailDTO(Long cartItemId,String itemName,String itemDetail ,int price , int count,String imgUrl){
-        this.id = cartItemId;
+    public OrderDetailDTO(Long id, String itemName, String itemDetail , int price , int count, String imgUrl){
+        this.id = id;
         this.itemName = itemName;
         this.price= price;
         this.itemDetail = itemDetail;
         this.count=count;
         this.imgUrl = imgUrl;
+//        this.regDate = regDate;
 
     }
 //    public OrderItemDTO(CartItem orderItem, String imgUrl){
@@ -54,8 +52,8 @@ public class CartDetailDTO { // 장바구니 조회 페이지에 전달할 DTO
 
     /* 상품*/
     // 주문 상품 정보를 저장할 List객체 생성
-    private List<CartDetailDTO> cartItemDTOList2 = new ArrayList<>();
-    public void addCartitemDTO2(CartDetailDTO orderItemDTO){
+    private List<OrderDetailDTO> cartItemDTOList2 = new ArrayList<>();
+    public void addCartitemDTO2(OrderDetailDTO orderItemDTO){
         // 주문 상품 리스트 객체에  주문 상품 정보 추가
         cartItemDTOList2.add(orderItemDTO);
     }

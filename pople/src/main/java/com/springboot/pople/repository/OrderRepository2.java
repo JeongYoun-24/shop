@@ -1,5 +1,7 @@
 package com.springboot.pople.repository;
 
+import com.springboot.pople.dto.item.CartDetailDTO;
+import com.springboot.pople.entity.Cart;
 import com.springboot.pople.entity.Order;
 import com.springboot.pople.entity.Order2;
 import org.springframework.data.domain.Pageable;
@@ -15,11 +17,11 @@ import java.util.List;
 public interface OrderRepository2 extends JpaRepository<Order2, Long>, QuerydslPredicateExecutor<Order2> {
 
 
-
+    List<Order2> findByUsers_Userid(String userid);
 
     // 현재 로그인 사용자의 주문 데이터를 페이징 조건에 맞춰서 조회
     @Query("select o from Order2 o where o.users.name = :name order by  o.orderStatus, o.orderDate desc")
-    List<Order2> findOrders(@Param("name") String Name, Pageable pageable);
+    List<Order2> findOrders(@Param("name") String name, Pageable pageable);
 
 //    // 현재 로그인한 회원의 주문 개수가 몇 개인지 조회
     @Query("select count(o) from Order2 o where o.users.name = :name")

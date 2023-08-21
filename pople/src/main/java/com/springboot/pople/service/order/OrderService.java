@@ -1,11 +1,14 @@
 package com.springboot.pople.service.order;
 
 import com.springboot.pople.dto.*;
+import com.springboot.pople.dto.item.CartDetailDTO;
+import com.springboot.pople.dto.item.OrderDetailDTO;
 import com.springboot.pople.dto.movieschedule.MovieScheduleDTO;
 import com.springboot.pople.entity.*;
 import com.springboot.pople.repository.OrderRepository;
 import com.springboot.pople.repository.OrderRepository2;
 import com.springboot.pople.repository.UsersRepository;
+import com.springboot.pople.repository.cart.OrderItemRepository;
 import com.springboot.pople.repository.item.ItemImgRepository;
 import com.springboot.pople.repository.item.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +38,7 @@ public class OrderService {
     private final UsersRepository usersRepository;// 회원 로직 처리
     private final OrderRepository2 orderRepository;// 주문서 로직 처리
     private final ItemImgRepository itemImgRepository;
+    private final OrderItemRepository orderItemRepository;
 
 
 
@@ -78,7 +82,7 @@ public class OrderService {
     public Page<OrderHistDTO2> getOrderList(String name, Pageable pageable){
 
         Users users = usersRepository.findByName(name);
-
+        log.info("11111"+users);
         // 1. 사용자의 아이디(email)와 페이징 조건을 이용해 주문 목록 조회 요청
         List<Order2> orders = orderRepository.findOrders(name, pageable);
         log.info("11111"+orders);
@@ -150,6 +154,62 @@ public class OrderService {
 
         order.cancelOrder2();
     }
+
+
+    // 현재 로그인한 회원의 정보를 이용하여 장바구니에 들어 있는 상품을 조회하는 로직
+    @Transactional(readOnly = true)
+    public Page<OrderDetailDTO> getCartList(String name,Pageable pageable){
+        List<OrderDetailDTO> orderDetailDTOList = new ArrayList<>();
+
+        List<Order2> orders = orderRepository.findOrders(name, pageable);
+        log.info("주문"+orders.isEmpty());
+
+        // 2. 사용자의 총 주문 개수
+        Long totalCount = orderRepository.countOreder(name);
+        log.info("주문갯수"+totalCount);
+
+        // 현재 로그인한 회원의 장바구니 엔티티 조회
+        Users users = usersRepository.findByName(name);
+        log.info(users);
+        List<Order2> order2 = orderRepository.findByUsers_Userid(users.getUserid());
+
+//        log.info("dssdsd"+order2);
+
+        // 장바구니에 상품을 한 번도 안 담았을 경우 장바구니 엔티티가 빈리스트로 반환
+        if (order2 == null){
+            return new PageImpl<>(orderDetailDTOList, pageable, totalCount);
+        }
+
+        for(Order2 order :orders){
+            // 장바구니에 담겨있는 상품정보 조회
+            List<OrderDetailDTO> orderDetailDTO = orderItemRepository.findOrderDetailDTOList(order.getId());
+
+            orderDetailDTOList.addAll(orderDetailDTO);
+        }
+
+
+
+
+        return new PageImpl<>(orderDetailDTOList, pageable, totalCount);
+    }
+
+
+  /*  public Long orders(List<OrderDTO2> orderDTOList,String name){
+        Users users = usersRepository.findByName(name);
+
+        List<OrderItem> orderItemList = new ArrayList<>();
+
+        for(OrderDTO2 orderDTO2 : orderDTOList){
+            Item item = itemRepository.findById(orderDTO2.getItemId()).orElseThrow(EntityNotFoundException::new);
+
+            OrderItem orderItem = OrderItem.createOrderItem(item,orderDTO2.getCount());
+            orderItemList.add(orderItem);
+        }
+
+        Order2 order =
+
+
+    }*/
 
 
 

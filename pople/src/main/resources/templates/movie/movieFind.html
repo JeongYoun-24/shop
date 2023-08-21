@@ -18,11 +18,11 @@
 					<h5 class="card-title">영화 이미지 </h5>
 
 					<div sec:authorize="isAnonymous()">
-						값이 없다
+
 					</div>
 					<div sec:authorize="isAuthenticated()">
 						<span>[[${#authentication.principal.username}]]</span>
-						<input type="text" id="user" th:value="${#authentication.principal.username}">
+						<input type="hidden" id="user" th:value="${#authentication.principal.username}">
 					</div>
 
 
@@ -243,7 +243,7 @@
 										<a class="page-link"
 										   th:href="@{'/movie/find/'+${movie.movieName}+'/'+${movieRev.number+1}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
 											<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-										</svg></a>
+										</svg>
 										</a>
 									</li>
 								</ul>

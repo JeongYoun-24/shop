@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter@Setter@ToString
@@ -26,6 +27,7 @@ public class OrderItem  {
 
     private int orderPrice;
     private int count;
+    private LocalDateTime regDate;
 
 //    private LocalDateTime regTime;
 //    private LocalDateTime updateTime;

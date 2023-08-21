@@ -20,6 +20,20 @@ public interface CartItemRepository  extends JpaRepository<CartItem,Long> {
     Long countCartItem(@Param("id") Long id);
 
 
+    @Query(value = "select new com.springboot.pople.dto.item.CartDetailDTO(ci.id, i.itemName, i.itemDetail,i.price, ci.count, im.imgUrl)" +
+            " from CartItem ci, ItemImg im " +
+            // 상품 정보 조인
+            " join ci.item i " +
+            //장바구니 아이디와 인자로 넘오온 장바구니아이디(조회하고자하는 장바구니)
+            " where ci.cart.id = :orderid " +
+            // 장바구니 상품아이디와 상품이미지에 있는 상품아이디 조인
+            "       and im.item.id = ci.item.id "+
+            // 장바구니에 보여질 상품대표이미지만 가져오는 조건처리
+            "       and im.repImgYn = 'Y' " +
+            " order by ci.regDate desc " )
+    List<CartDetailDTO> findCartDetailDTOList(@Param("orderid") Long orderid);
+
+
 //    @Modifying
 //    @Query(value = ("select new com.springboot.pople.dto.item.CartDetailDTO(ci.id,i.itemName,i.price,ci.count,im.imgUrl)" +
 //            " form CartItem ci,ItemImg im " +
